@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.0-beta.32](https://github.com/oneulddu/vitrine/compare/v1.0.0-beta.31...v1.0.0-beta.32) (2026-11-16)
+
+
+### Features
+
+* Eevee 광고 차단 보강 가져오기 ([7ef73bd](https://github.com/oneulddu/vitrine/commit/7ef73bdf69cb44eaddf4c6328ecd70ad23b70117))
+* PetitLyrics 가사 소스 추가 ([75c9f59](https://github.com/oneulddu/vitrine/commit/75c9f592b37d29c59b6ab8e5284db5acd4b03ce4))
+* SponsorBlock 팟캐스트 구간 건너뛰기 ([3d2dcf6](https://github.com/oneulddu/vitrine/commit/3d2dcf6e25c18e200847d6d5de630553ceb55726))
+* 오프라인 기기 관리에 Eevee 개선 가져오기 ([776e2b3](https://github.com/oneulddu/vitrine/commit/776e2b3ef3b83fc0e809bd7101445dfdfd6f2de1))
+* 플레이어 메뉴에서 오디오 효과 바로 열기 ([1ed5ade](https://github.com/oneulddu/vitrine/commit/1ed5ade32d1100e1f1aa0bd171d622b37d5c1191))
+
+
+### Fixes
+
+* Gemini 모델 오류 안내와 기본 모델 교체 ([a8be71c](https://github.com/oneulddu/vitrine/commit/a8be71cbf275161fb983e10c348055eebfede9b0))
+* SF Symbol 사용자 지정 탭을 실제 심볼로 표시 ([935de52](https://github.com/oneulddu/vitrine/commit/935de52bb9ec15392253abf6b72a0b94e15c70bc))
+* Spotify 음절 단위 가사 표시와 곡 전환 시 가사 시계 ([3e301ac](https://github.com/oneulddu/vitrine/commit/3e301acb3d76fae3156fe879c7a1098abd2950be))
+* 인증 정보가 늦게 와도 Canvas와 잠금 화면 아트워크 시작 ([769f647](https://github.com/oneulddu/vitrine/commit/769f647736b22279bd31546b774417ba7c62b5ad))
+
 ## [1.0.0-beta.31](https://github.com/oneulddu/vitrine/compare/v1.0.0-beta.30...v1.0.0-beta.31) (2026-11-16)
 
 
