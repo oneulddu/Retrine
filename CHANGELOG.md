@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.0-beta.31](https://github.com/oneulddu/vitrine/compare/v1.0.0-beta.30...v1.0.0-beta.31) (2026-11-16)
+
+
+### Features
+
+* AI 가사 번역 프롬프트 수정 설정 ([b03e315](https://github.com/oneulddu/vitrine/commit/b03e3157c214a535161bb0fa06ca0878dad6c37d))
+* 배포 IPA에 앱 내부 WireGuard 기본 포함 ([52850c2](https://github.com/oneulddu/vitrine/commit/52850c2bd4a6362b506c23adadee18ce1e8aadcb))
+
+
+### Fixes
+
+* iPad 가로 캡슐 미니 플레이어 반복 배치로 멈추는 문제 ([af76299](https://github.com/oneulddu/vitrine/commit/af762993cfc2c57a8ca1cc7009a40b6dce984331))
+* iPad 두 칸 플레이어가 열릴 때 반복 배치하지 않게 ([2c6a558](https://github.com/oneulddu/vitrine/commit/2c6a5588bb7107743c4353ca710c3aab0f0e5395))
+
 ## [1.0.0-beta.30](https://github.com/oneulddu/vitrine/compare/v1.0.0-beta.29...v1.0.0-beta.30) (2026-11-14)
 
 
