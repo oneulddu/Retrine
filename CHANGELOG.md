@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.0-beta.33](https://github.com/oneulddu/vitrine/compare/v1.0.0-beta.32...v1.0.0-beta.33) (2026-11-17)
+
+
+### Features
+
+* 페이지와 바를 Apple Music에 맞추기 ([279347a](https://github.com/oneulddu/vitrine/commit/279347ae8a0568ac9687e5a89161e31387bfa365))
+* 플레이어와 가사를 Apple Music에 맞추기 ([2a39f9d](https://github.com/oneulddu/vitrine/commit/2a39f9dfcc91d24aebdbcc754a6f22e884f69ca3))
+
+
+### Fixes
+
+* 확장만 빠진 IPA에 '앱 수정 사항 없이 설치됨' 경고 안 띄우기 ([a9c7ed2](https://github.com/oneulddu/vitrine/commit/a9c7ed27006ccd79584e35b28983da32c928db48))
+
+
+### Performance
+
+* 백그라운드 배터리 소모 줄이기 ([264e6e9](https://github.com/oneulddu/vitrine/commit/264e6e9ac5576b9b64ce34535c18f4855a2ab993))
+
 ## [1.0.0-beta.32](https://github.com/oneulddu/vitrine/compare/v1.0.0-beta.31...v1.0.0-beta.32) (2026-11-16)
 
 
