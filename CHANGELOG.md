@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.0.0-beta.34](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.33...v1.0.0-beta.34) (2026-11-19)
+
+
+### Features
+
+* 9.2.0 계정 속성 응답에 Pixie 오프라인 값 적용 ([b20edfb](https://github.com/oneulddu/Retrine/commit/b20edfbf85cb3474d8c5f6d120a851cecf7e9976))
+* Pixie 1.4로 업데이트하고 Spotify 9.2.0 대상 추가 ([7f15eb9](https://github.com/oneulddu/Retrine/commit/7f15eb9e9dcf22d4f467a6059aa4269eb3f27b38))
+* Spotify 9.2.0 지원과 WireGuard 9.2.0 허용 ([b641f5c](https://github.com/oneulddu/Retrine/commit/b641f5cb2e4a552896558a4b7c0f26cdc7da0553))
+* Spotify 9.2.0에서 Pixie 동작 허용 ([abed844](https://github.com/oneulddu/Retrine/commit/abed84400d16910d4dbbd7a7be2773b62c673220))
+* WireGuard 사용 중에도 가사가 나오게 ([526dbdb](https://github.com/oneulddu/Retrine/commit/526dbdb3eed8841af42d20ee233ba8e38bfaa947))
+* 음량 바를 재생 바와 같은 모양으로 ([cbd0c17](https://github.com/oneulddu/Retrine/commit/cbd0c17b36dbf77cf8ce8bb9e03e6a7edf8ce95b))
+* 플레이어를 Apple Music처럼 다듬기 ([087cb82](https://github.com/oneulddu/Retrine/commit/087cb826cb52957bbc975e08666fceeee6647ef0))
+
+
+### Fixes
+
+* iPad 창 크기 전환 뒤 플레이어·캡슐 결함 ([5fe760a](https://github.com/oneulddu/Retrine/commit/5fe760a3042df47c809e98c8dd8bbfc5beb36e3c))
+* iPad 탭바 뒤 검은 사각형 없애기 ([01fec99](https://github.com/oneulddu/Retrine/commit/01fec9947c0baf53c47791075c55ea66054b63a2))
+* Spotify 9.2.0 보관함 머리글·작은 보관함 유지 ([69c9d33](https://github.com/oneulddu/Retrine/commit/69c9d33f257da5eebc528e9f9e4c6dec1962d3f9))
+* Spotify 9.2.0에서 광고 차단·팔로우·좋아요 훅 유지 ([6933b2e](https://github.com/oneulddu/Retrine/commit/6933b2e5fe61ffee1480baf8464df0fa539f5de5))
+* 같은 가사 교체에서 카라오케 줄 유지 ([2b9b827](https://github.com/oneulddu/Retrine/commit/2b9b827383158d2673f746abfbeabe2f245c9946))
+* 대기열 '다음 곡' 제목이 두 겹으로 보이던 문제 ([f1619e4](https://github.com/oneulddu/Retrine/commit/f1619e405ab9ffd1c96bee0161f2f981157f43f6))
+* 설정 검색에서 고른 페이지가 열리지 않던 문제 ([de6869a](https://github.com/oneulddu/Retrine/commit/de6869a4d2ad405a9e0890cdc53f90a4ac77cf8d))
+* 업데이트 확인과 GitHub 링크를 Retrine 저장소로 ([44096e9](https://github.com/oneulddu/Retrine/commit/44096e98eab8fe552f4be63c31682401cc8dd4bf))
+
+
+### Performance
+
+* 홈 선반을 숨기면 생기던 레이아웃 반복 없애기 ([127204d](https://github.com/oneulddu/Retrine/commit/127204d7513572c42862a7644de00b6db5628faf))
+
 ## [1.0.0-beta.33](https://github.com/oneulddu/vitrine/compare/v1.0.0-beta.32...v1.0.0-beta.33) (2026-11-17)
 
 
