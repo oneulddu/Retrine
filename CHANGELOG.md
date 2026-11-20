@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.0.0-beta.36](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.35...v1.0.0-beta.36) (2026-11-20)
+
+
+### Features
+
+* 가사 한 줄 기본 크기를 키우고 플레이어 설정에 크기 항목 추가 ([9af3c5e](https://github.com/oneulddu/Retrine/commit/9af3c5ebd8002718e9bd7fb33b6d0c9b556e6178))
+* 가사 한 줄을 Spotify 가사 미리보기와 같은 모양으로 표시 ([c91abae](https://github.com/oneulddu/Retrine/commit/c91abae4436f9d289f741fc7692ba5d18f0be154))
+* 가사 한 줄을 제목 위 컴팩트 배치로 바꾸고 커버를 키움 ([99479d1](https://github.com/oneulddu/Retrine/commit/99479d1204a5c96f397a16dab927ff29dbc2cfd1))
+* 새 디자인에서 비디오로 전환 칩을 기본으로 숨김 ([d322721](https://github.com/oneulddu/Retrine/commit/d32272159994ce3c56e6f32d060337e179d91657))
+
+
+### Fixes
+
+* 가사 한 줄이 비디오로 전환 칩과 겹치지 않게 배치 ([d322721](https://github.com/oneulddu/Retrine/commit/d32272159994ce3c56e6f32d060337e179d91657))
+* 비디오로 전환 칩이 떠도 가사 한 줄 표시 ([4da0ff8](https://github.com/oneulddu/Retrine/commit/4da0ff86d172f7eaeefe9fb2bc1b36804cce9d52))
+* 업데이트 화면이 이전 버전 내용을 현재 빌드 것으로 보이던 문제 수정 ([1c6838f](https://github.com/oneulddu/Retrine/commit/1c6838f03854fd1d33b62b10d6e1b4fc795b2ab9)), closes [#26](https://github.com/oneulddu/Retrine/issues/26)
+* 영상 커버에서 가사 한 줄을 제목 위에 표시 ([858419a](https://github.com/oneulddu/Retrine/commit/858419affccd145c1f154d3157283dfa49af5331))
+* 재생 막대를 누를 때 렌즈 모양으로 그려지던 문제 수정 ([cdb6942](https://github.com/oneulddu/Retrine/commit/cdb6942139269a993885e3014f0089117f4090ed)), closes [#30](https://github.com/oneulddu/Retrine/issues/30)
+* 재질로 그려진 비디오로 전환 칩을 가사 한 줄이 인식 ([5e6623e](https://github.com/oneulddu/Retrine/commit/5e6623e36a940589be68ead487011f6188febba9))
+
 ## [1.0.0-beta.35](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.34...v1.0.0-beta.35) (2026-11-20)
 
 
