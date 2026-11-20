@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.0.0-beta.35](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.34...v1.0.0-beta.35) (2026-11-20)
+
+
+### Features
+
+* 프로젝트 이름을 Retrine으로 바꾸기 ([397cf8d](https://github.com/oneulddu/Retrine/commit/397cf8dae077e0b78379a9ad1cb95566694bcae9))
+
+
+### Fixes
+
+* iPad 가로 플레이리스트 헤더 겹침 수정 ([00d61f6](https://github.com/oneulddu/Retrine/commit/00d61f636998986c6a19aab03138134eb5103cb8))
+* iPad 가로 플레이어에서 음질 표시 유지 ([f7ade11](https://github.com/oneulddu/Retrine/commit/f7ade119041f276853c6e393958a703aa9a9e430))
+* iPad 회전 후 홈 상단 버튼과 배경색이 어긋나는 문제 수정 ([aba6f33](https://github.com/oneulddu/Retrine/commit/aba6f33b959872b752e418ab806e2070a6229aa4)), closes [#28](https://github.com/oneulddu/Retrine/issues/28) [#24](https://github.com/oneulddu/Retrine/issues/24)
+* iPad에서 플레이어 ⋯ 메뉴가 로드 중에 멈추는 문제 수정 ([9e3fb8d](https://github.com/oneulddu/Retrine/commit/9e3fb8dea033ddcae593005b4d63ac44a82d70a8)), closes [#28](https://github.com/oneulddu/Retrine/issues/28)
+* Pixie 진단 알림이 메인 스레드를 기다리지 않게 ([a4c11da](https://github.com/oneulddu/Retrine/commit/a4c11dafa408c5bcad25eaf66e37b1ced33c90e1))
+* Spotify 9.2에서 Premium 흉내를 계정 상태에 적용 ([d013606](https://github.com/oneulddu/Retrine/commit/d013606b1e49ae9ca7e35bb4143ceed1bb0d0d1f))
+* 에피소드를 띄운 뒤 플레이어 하단 버튼이 안 눌리는 문제 수정 ([ab65b61](https://github.com/oneulddu/Retrine/commit/ab65b61286d2b05fab3a71328dd2a158bff68f3d))
+* 투어가 재시작으로 끝나도 번들 ID 안내 띄우기 ([1400b41](https://github.com/oneulddu/Retrine/commit/1400b41cd23480e99f09c3c318a6a4157c4f1732))
+* 팟캐스트 플레이어의 건너뛰기 겹침과 배속 표시 수정 ([3836a98](https://github.com/oneulddu/Retrine/commit/3836a983a606588f670fea8bc57af0e5431e373c)), closes [#28](https://github.com/oneulddu/Retrine/issues/28)
+* 플레이어 ⋯ 메뉴의 중복 항목 정리 ([5e74305](https://github.com/oneulddu/Retrine/commit/5e74305dc7801fe3c3062f4892c2f0a6d1ac8177)), closes [#27](https://github.com/oneulddu/Retrine/issues/27)
+* 플레이어 닫기 손잡이를 안전 영역 아래에 고정 ([3b34d5e](https://github.com/oneulddu/Retrine/commit/3b34d5e60a0f94cf5571ae1b88c5d52e061a80d6))
+* 플레이어 음질 배지와 커버를 Apple Music 배치에 맞춤 ([c04affb](https://github.com/oneulddu/Retrine/commit/c04affbfaa44c2583b8372a53624069af7d83267)), closes [#27](https://github.com/oneulddu/Retrine/issues/27)
+* 플레이어 제목 줄의 19 표시와 긴 제목 폭 조정 ([40f7da5](https://github.com/oneulddu/Retrine/commit/40f7da5352fee390a0faf40105a5625b77abb0d9)), closes [#27](https://github.com/oneulddu/Retrine/issues/27)
+
 ## [1.0.0-beta.34](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.33...v1.0.0-beta.34) (2026-11-19)
 
 
