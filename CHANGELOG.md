@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.0-beta.38](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.37...v1.0.0-beta.38) (2026-11-21)
+
+
+### Fixes
+
+* 가사 미리보기 탭이 커버 뷰어를 열던 문제 수정 ([b1fbf7a](https://github.com/oneulddu/Retrine/commit/b1fbf7a319a7cfbc09551741b42df4428720840f))
+* 대기열 커버·제목 설정·앨범 커버의 갱신 누락 수정 ([9e4998e](https://github.com/oneulddu/Retrine/commit/9e4998e114fa520d5c3f63f2b1378424559136ce))
+* 탭 막대를 펼칠 때 검색 원이 막대 위에 떠 보이던 문제 수정 ([7fb2428](https://github.com/oneulddu/Retrine/commit/7fb2428f2f462d997366e99c515fcc82c59c1cb7))
+* 플레이어 제목 줄이 여백 밖이나 안쪽으로 어긋나던 문제 수정 ([966b973](https://github.com/oneulddu/Retrine/commit/966b9731e7b7d74f63e63c5402291d29e092001a))
+
 ## [1.0.0-beta.37](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.36...v1.0.0-beta.37) (2026-11-21)
 
 
