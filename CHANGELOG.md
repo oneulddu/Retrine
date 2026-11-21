@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.0-beta.37](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.36...v1.0.0-beta.37) (2026-11-21)
+
+
+### Features
+
+* IPA 빌드 워크플로의 기본 번들 ID를 app.retrine.player로 변경 ([a032e84](https://github.com/oneulddu/Retrine/commit/a032e84081c12886829de1e3c02088dc4cd8bf9c))
+* Pixie를 빌드 기본값으로 포함 ([3756c61](https://github.com/oneulddu/Retrine/commit/3756c61e60ca5dafc1b25be47fe6dbedd6e93a23))
+* 탭 막대가 줄어들면 검색을 미니 플레이어 오른쪽 원에 표시 ([17039e2](https://github.com/oneulddu/Retrine/commit/17039e260fd668664b322f368d3ea93585557d0e))
+
+
+### Fixes
+
+* 곡 제목 간단히·번역을 미니 플레이어에도 적용 ([f8f1d35](https://github.com/oneulddu/Retrine/commit/f8f1d35708006e93b602ea29f8570cd0169168c8))
+* 곡을 넘길 때 플레이어 커버·제목 줄·음량 바가 어긋나던 문제 수정 ([06d3ac9](https://github.com/oneulddu/Retrine/commit/06d3ac9236e89c99608f5e38af29779d590a83fe))
+* 컴필레이션·사운드트랙의 Apple Music 움직이는 커버 찾기 ([03a393b](https://github.com/oneulddu/Retrine/commit/03a393b6fded2d64446b7d16881558a22bca00d6))
+* 탭 막대를 펼칠 때 검색 아이콘이 유리에 덮여 흐려지던 문제 수정 ([a4d9292](https://github.com/oneulddu/Retrine/commit/a4d929240d647495314a84f45b5b2933c0227ec8))
+
 ## [1.0.0-beta.36](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.35...v1.0.0-beta.36) (2026-11-20)
 
 
