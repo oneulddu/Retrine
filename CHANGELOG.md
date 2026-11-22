@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0-beta.40](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.39...v1.0.0-beta.40) (2026-11-22)
+
+
+### Fixes
+
+* LiveContainer에서 Pixie가 재생을 막던 문제 ([f2ed4b5](https://github.com/oneulddu/Retrine/commit/f2ed4b5f44bff4943551a11bd9f7be0db23348b1))
+
 ## [1.0.0-beta.39](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.38...v1.0.0-beta.39) (2026-11-22)
 
 
