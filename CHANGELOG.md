@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.0-beta.41](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.40...v1.0.0-beta.41) (2026-11-22)
+
+
+### Features
+
+* LiveContainer에서도 Pixie 다운로드·내보내기 사용 ([60cb38e](https://github.com/oneulddu/Retrine/commit/60cb38e877018c5297209584fc2f94b416b12089))
+
+
+### Fixes
+
+* Apple Music이 ' - Single'을 붙인 싱글의 움직이는 커버 찾기 ([0c2612e](https://github.com/oneulddu/Retrine/commit/0c2612e761e249fba829cd9ebe63eed9d82a0b77))
+* 관성 스크롤 중 탭 페이지로 옮겨진 목록도 탭 막대를 줄임 ([ac5f9fb](https://github.com/oneulddu/Retrine/commit/ac5f9fbe2eead3f549114e41c465b2254218b40c))
+* 별 모양 추가 버튼을 켜면 설정 미리보기에도 별 표시 ([d91e94d](https://github.com/oneulddu/Retrine/commit/d91e94da8e89c7e54251e8a494cf1c5a2dc7f799))
+* 앨범 화면 곡 줄이 안 맞아도 움직이는 커버를 식별 코드로 찾기 ([fa7b57f](https://github.com/oneulddu/Retrine/commit/fa7b57f1e8e5d2cf55250be810bb4d7d5f20b8d0))
+* 앨범 화면에서 곡을 눌러도 내보내기가 대기 중에 멈추지 않게 ([9754792](https://github.com/oneulddu/Retrine/commit/9754792884547ac07efc45ba7352b8ab7b79fe6f))
+* 재연결된 트랙도 Pixie로 내보내기 ([be7bfda](https://github.com/oneulddu/Retrine/commit/be7bfda394232f31eeef8ff6bb97d8f19c4bbf6d))
+
 ## [1.0.0-beta.40](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.39...v1.0.0-beta.40) (2026-11-22)
 
 
