@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0-beta.39](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.38...v1.0.0-beta.39) (2026-11-22)
+
+
+### Fixes
+
+* iPad 재설계 화면에서 상단 ⋯ 버튼을 뒤로가기와 같은 높이로 ([5d94f86](https://github.com/oneulddu/Retrine/commit/5d94f86e441a66fbb6e356a3b178c6934da48a4c))
+* Spotify 9.2.0에서 Pixie 오디오 내보내기 복호화 키 캡처 복구 ([6748d16](https://github.com/oneulddu/Retrine/commit/6748d162ab65298492272373f6682295cdf6408e))
+* 가사 스타일 설정에서 프리셋이 한 박자 늦게 들어오던 문제 ([61be643](https://github.com/oneulddu/Retrine/commit/61be6430849e96b41125c1e25199cb83483511cb))
+* 라이브러리에 없는 앨범도 Pixie로 다운로드되게 ([2d6cb80](https://github.com/oneulddu/Retrine/commit/2d6cb8048551bee3a26c876a9a456139e3216e06))
+* 앨범 곡 줄에서 재생 횟수가 좋아요 표시와 겹치던 문제 ([8dc539e](https://github.com/oneulddu/Retrine/commit/8dc539ed0c87ef12cba1486f0d569cadcc2937aa))
+* 탭 막대 펼칠 때 검색 원이 줄 위로 떠서 튀던 문제 ([c0f930b](https://github.com/oneulddu/Retrine/commit/c0f930b0ce38e11408c46a5af26fc9bae70c2740))
+
 ## [1.0.0-beta.38](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.37...v1.0.0-beta.38) (2026-11-22)
 
 
