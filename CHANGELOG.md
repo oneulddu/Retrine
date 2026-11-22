@@ -1,5 +1,42 @@
 # Changelog
 
+## [1.0.0-beta.38](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.37...v1.0.0-beta.38) (2026-11-22)
+
+
+### Features
+
+* 가사 화면 120Hz를 끌 수 있는 옵션 추가 ([247dbeb](https://github.com/oneulddu/Retrine/commit/247dbeb779f2fc21e30f44e248e8a0ee9f281d6e))
+* 움직이는 커버 아래 색과 상단 띠를 Music 앱에 가깝게 ([86d2aac](https://github.com/oneulddu/Retrine/commit/86d2aacdfb1e877877595e50768a0c85c4a80f35))
+
+
+### Fixes
+
+* iPad 탭 막대 아래 검은 띠와 잘린 탭 이름 수정 ([8384c0c](https://github.com/oneulddu/Retrine/commit/8384c0c37505bab782f18e30c1fe3addae11fa95))
+* Premium 재생목록의 칩 줄이 곡 제목 위에 겹치던 문제 수정 ([6330524](https://github.com/oneulddu/Retrine/commit/63305246f2e3da47ae9f11b183fa5b7cdfe8931c))
+* 가사 미리보기 탭이 커버 뷰어를 열던 문제 수정 ([b1fbf7a](https://github.com/oneulddu/Retrine/commit/b1fbf7a319a7cfbc09551741b42df4428720840f))
+* 가사 화면의 번역·탭·여백 결함 수정 ([c5a523f](https://github.com/oneulddu/Retrine/commit/c5a523f38da910a13978b78d701ee9a1aadcb0d7))
+* 대기열 커버·제목 설정·앨범 커버의 갱신 누락 수정 ([9e4998e](https://github.com/oneulddu/Retrine/commit/9e4998e114fa520d5c3f63f2b1378424559136ce))
+* 앨범 카드 커버가 다운로드·더보기 캡슐에 가려지던 문제 수정 ([06a5d51](https://github.com/oneulddu/Retrine/commit/06a5d51271f68eadfaabe11dec97f6412d921623))
+* 앨범·재생목록·검색·라이브러리 페이지 배치 결함 수정 ([7d4ff68](https://github.com/oneulddu/Retrine/commit/7d4ff685224f214d10927e61e23a8333baa1665b))
+* 이름이 다르게 적힌 같은 음반의 움직이는 커버 찾기 ([a20f7cc](https://github.com/oneulddu/Retrine/commit/a20f7cc1a598863bfc25a97032f3addef7f311de))
+* 접힌 라이브러리 헤더가 safe area 변경을 따라가게 ([de1452c](https://github.com/oneulddu/Retrine/commit/de1452cd8fd2631aee0c4be351d8401870e2d049))
+* 탭 막대·미니 플레이어·고정 메뉴 결함 수정 ([12ae018](https://github.com/oneulddu/Retrine/commit/12ae018561e3b4f5a148ff7a7cd4ea141e9082ce))
+* 탭 막대를 펼칠 때 검색 원이 막대 위에 떠 보이던 문제 수정 ([7fb2428](https://github.com/oneulddu/Retrine/commit/7fb2428f2f462d997366e99c515fcc82c59c1cb7))
+* 팟캐스트 로딩 띠가 재생 바 위로 뜨던 문제 수정 ([0d50b65](https://github.com/oneulddu/Retrine/commit/0d50b65ba503e50f55a09fa2b27ce77512285cf2))
+* 플레이어 가사 미리보기와 제목 줄이 24pt에 남던 문제 수정 ([4a50168](https://github.com/oneulddu/Retrine/commit/4a50168042fbb3db88bb448b70542aec5d8574fa))
+* 플레이어 제목 줄이 여백 밖이나 안쪽으로 어긋나던 문제 수정 ([966b973](https://github.com/oneulddu/Retrine/commit/966b9731e7b7d74f63e63c5402291d29e092001a))
+* 플레이어의 가사·대기열 전환에서 남던 어긋남 수정 ([646b8c0](https://github.com/oneulddu/Retrine/commit/646b8c033ecce379e7788053592bbdf464370cf6))
+* 한국어 앨범 섹션 제목도 스위치로 숨김 ([befb87e](https://github.com/oneulddu/Retrine/commit/befb87e057d56b2e5c12dfd6a803a5012b64c344))
+* 한국어 콘서트 섹션도 앨범 스위치로 숨김 ([1ee9347](https://github.com/oneulddu/Retrine/commit/1ee934788aed6e606c17968e6d21932c8d250ac6))
+
+
+### Performance
+
+* 기기가 뜨거울 때 장식 모션을 멈춤 ([c6431e8](https://github.com/oneulddu/Retrine/commit/c6431e88989d36b4029f3a288930e8923560d6ce))
+* 보이지 않는 Spotify 진행 타이머를 멈추고 호출당 낭비를 정리 ([12b6a0f](https://github.com/oneulddu/Retrine/commit/12b6a0f6d3eeb230b22c22393f89239fc7246fbb))
+* 플레이어 색 배경의 GPU 사용을 절반 아래로 줄임 ([571ec87](https://github.com/oneulddu/Retrine/commit/571ec8723f979a9b43826342ea8a9a3a00342b00))
+* 화면이 안 바뀌는 동안의 갱신과 타이머를 줄임 ([db12c4d](https://github.com/oneulddu/Retrine/commit/db12c4d5d61cb9cfbb4cd91cb827f724a0395485))
+
 ## [1.0.0-beta.37](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.36...v1.0.0-beta.37) (2026-11-21)
 
 
