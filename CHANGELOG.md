@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.42...v1.0.0) (2026-11-23)
+
+
+### Chores
+
+* 1.0.0 정식 출시 ([76145ff](https://github.com/oneulddu/Retrine/commit/76145ffda12ec73fa29f07007aade03166c77980))
+
 ## [1.0.0-beta.42](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.41...v1.0.0-beta.42) (2026-11-23)
 
 
