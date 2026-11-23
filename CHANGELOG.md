@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.0-beta.42](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.41...v1.0.0-beta.42) (2026-11-23)
+
+
+### Features
+
+* SponsorBlock 종류별 동작·구간 표시·정시 건너뛰기 ([9a4d2db](https://github.com/oneulddu/Retrine/commit/9a4d2dba08f2e417d9d448192e5130ef9dc35fdb))
+* 아티스트 페이지 이름을 가운데 정렬 ([e70abd0](https://github.com/oneulddu/Retrine/commit/e70abd0fc48aa5773d7a40d36b51b9a8652948be))
+* 캐시 자동 정리(Spotify 캐시 한도·커버 클립 300MB) ([ac5b1fe](https://github.com/oneulddu/Retrine/commit/ac5b1fe8d77764d1e459fe50dcc4530b690681ad))
+
+
+### Fixes
+
+* Agent 입력 막대가 있어도 가사·대기열 버튼을 제 줄에 ([20e763f](https://github.com/oneulddu/Retrine/commit/20e763f5bf35d869c122103f801a48f0ee053efd))
+
 ## [1.0.0-beta.41](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.40...v1.0.0-beta.41) (2026-11-22)
 
 
