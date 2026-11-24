@@ -1,5 +1,36 @@
 # Changelog
 
+## [1.0.1-beta.2](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.1...v1.0.1-beta.2) (2026-11-24)
+
+
+### Features
+
+* Spotify 9.1.78·9.1.88 지원 종료 ([aa4ccdf](https://github.com/oneulddu/Retrine/commit/aa4ccdffff33c0d3e288b9001d2bac2bddf7a176))
+
+
+### Fixes
+
+* Spotify 내부 구조가 바뀌어도 충돌하지 않게 보호 ([42d7665](https://github.com/oneulddu/Retrine/commit/42d7665bf31a892468cd58ceccafb48c43f6ecc2))
+* 라이트 모드에서 Retrine 알림과 시트가 밝게 뜨는 문제 수정 ([4073088](https://github.com/oneulddu/Retrine/commit/40730888c74a02e6031a52b4bacf8b6f61611644))
+* 보안·개인정보 감사 P0 항목 수정 ([8f0129a](https://github.com/oneulddu/Retrine/commit/8f0129ade93a86e5a5f3c66da26f024c92861cc5))
+* 재생 화면 제스처와 속도 표시의 해제된 참조 제거 ([bc959f6](https://github.com/oneulddu/Retrine/commit/bc959f6709b90179741fb01cfb3ff17b2bc6fc98))
+* 진단 내보내기의 로그 접두사 범위 오류 수정 ([4eb6ca2](https://github.com/oneulddu/Retrine/commit/4eb6ca23e61131318f13d2cb99e700f7631254f7))
+
+
+### Performance
+
+* Sing의 CPU·ANE 모델 동시 상주 줄이기 ([929e2b3](https://github.com/oneulddu/Retrine/commit/929e2b3204a9983249faa30e392455860f121abd))
+* WireGuard를 끄면 Go 런타임을 불러오지 않기 ([860724f](https://github.com/oneulddu/Retrine/commit/860724f65e3e99bd6d5b102aa7a8f0d366b68f78))
+* 감상기록을 메모리에 다 올리지 않고 필요할 때 읽기 ([d11b307](https://github.com/oneulddu/Retrine/commit/d11b3078072d514f7576717253e2b3f555263c2a))
+* 아티스트 블러·유체 배경·가사 화면의 GPU 메모리 줄이기 ([00e20ee](https://github.com/oneulddu/Retrine/commit/00e20ee7c2287149877e6e7b0bdaa726cae742b6))
+* 잠금화면 미리보기 메모리 경고 대응과 시작 시 검색 줄이기 ([4dc6333](https://github.com/oneulddu/Retrine/commit/4dc633303fe93653ccc1333de18bfbe9ebe9c92c))
+* 컨볼버 IR 로드와 무손실 엔진 버퍼 메모리 줄이기 ([2680c8f](https://github.com/oneulddu/Retrine/commit/2680c8fe45d786eb64c7b8375de55a86666504a4))
+
+
+### Chores
+
+* 다음 베타 버전을 1.0.1-beta.2로 고정 ([34b08a5](https://github.com/oneulddu/Retrine/commit/34b08a56a107b489206d21da9e7e6e4f955d8a88))
+
 ## [1.0.1-beta.1](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.0...v1.0.1-beta.1) (2026-11-24)
 
 
