@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.0.1-beta.0](https://github.com/oneulddu/Retrine/compare/v1.0.0...v1.0.1-beta.0) (2026-11-24)
+
+
+### Features
+
+* 모든 곡 가사 가져오기와 로컬 파일 내장 가사 지원 ([a1bf798](https://github.com/oneulddu/Retrine/commit/a1bf798d9aa1264cccb1f11502c390edc2ea66af))
+* 새 디자인 유리 재질·색조·터치 반응과 저장 표시 선택 추가 ([90fc689](https://github.com/oneulddu/Retrine/commit/90fc68905d7e59ba043c6b2acdb60de1b50a5ea6))
+* 아티스트 Play를 길게 눌러 셔플 재생 ([9d2ebcf](https://github.com/oneulddu/Retrine/commit/9d2ebcf6be8085d84cb3db6726a5982672378c50))
+* 앨범 트랙 번호를 디스크별로 표시 ([89b9c0c](https://github.com/oneulddu/Retrine/commit/89b9c0cac4e4db112a17567c7af1f0a514e11b4d))
+* 플레이리스트 헤더 정보 표시 스위치 추가 ([f63e16c](https://github.com/oneulddu/Retrine/commit/f63e16c041ed78fd0bfd2ec1be25be5fb57da4c5))
+
+
+### Fixes
+
+* TTML 크기 제한·모션 임시 파일 정리·잠금화면 반복 비용 수정 ([1a57904](https://github.com/oneulddu/Retrine/commit/1a579042658d18ccb402b238fee3cc64cb3114bb))
+* WireGuard 시작 실패 복구와 연결·다이얼 시간 제한 수정 ([cd8c0eb](https://github.com/oneulddu/Retrine/commit/cd8c0ebb8e439fbbf65d62a8f605dcbfd5996087))
+* 레이어 훅·Connect·머리 제스처·폰트의 스레드 경쟁 수정 ([4d47d63](https://github.com/oneulddu/Retrine/commit/4d47d631e7191d78044128616f313e17d20eb0b6))
+* 백업에서 WireGuard 설정 제외와 확장·SponsorBlock 메모리 안정성 수정 ([3d91c93](https://github.com/oneulddu/Retrine/commit/3d91c93487e1844948e9a0bea459a29c8dd10d03))
+* 번역 저장소·WireGuard 리스너·광고 차단 재생·빌드 스크립트 안정성 수정 ([0bc46ef](https://github.com/oneulddu/Retrine/commit/0bc46ef9f4516157d0eed1edb848a61053c103fa))
+* 새 디자인 숨은 플레이어 GPU 작업·유리·앨범 노트 수정 ([0493378](https://github.com/oneulddu/Retrine/commit/0493378e257382bb841e2eedf02040df860a2fd3))
+* 새 디자인 저장 표시·가사 카드·가사 버튼 유리 안정성 수정 ([1c20299](https://github.com/oneulddu/Retrine/commit/1c202995b9fbbb47efb22806d3c10fa3996e6598))
+* 설정·진단·공용 유틸의 감사 지적 수정 ([ce4c44a](https://github.com/oneulddu/Retrine/commit/ce4c44a9ae215d77a88aa40329b00f7abc17e227))
+* 시작 정리가 실패하면 가져오기 임시 폴더 정리를 다시 시도 ([5ad1a8d](https://github.com/oneulddu/Retrine/commit/5ad1a8dfbbe12c68292baccf39526fda21d95706))
+* 아티스트 월별 리스너를 정보 섹션 설정에서 첫 화면부터 숨김 ([0c24b60](https://github.com/oneulddu/Retrine/commit/0c24b608caed977949fc2071c697a99d9f9ded3d))
+* 오디오 렌더링 경로의 버퍼 넘침·레이스·재귀 깊이 수정 ([e5b89a0](https://github.com/oneulddu/Retrine/commit/e5b89a0a272c472fa3f75c662d7f1aeaffb4bcc9))
+* 지역 spclient 서버를 쓰는 계정에서도 요청 헤더 수집 ([79e5de2](https://github.com/oneulddu/Retrine/commit/79e5de226c4264f9a0c48181207a708f65b44339))
+* 키 없는 가사 소스가 오프라인 저장을 막던 문제와 잠금화면 가사 안정성 수정 ([af3e2f2](https://github.com/oneulddu/Retrine/commit/af3e2f28b36222e38692a02141890357d366acc2))
+
+
+### Performance
+
+* 가사 배경·설정 화면·가사 줄 배치의 반복 비용 줄임 ([9c089df](https://github.com/oneulddu/Retrine/commit/9c089df16fe3aba17dfceaa18fde9c451121184b))
+* 광고 차단 네트워크 훅의 청크별 경로 검사와 응답별 할당 제거 ([e00763e](https://github.com/oneulddu/Retrine/commit/e00763e050c333bb0581989946af38fe48aaf81f))
+
+
+### Chores
+
+* 다음 베타를 1.0.1로 지정 ([7667374](https://github.com/oneulddu/Retrine/commit/7667374b1b314ccb6720193983cfa563ffdfb082))
+
 ## [1.0.0](https://github.com/oneulddu/Retrine/compare/v1.0.0-beta.42...v1.0.0) (2026-11-23)
 
 
