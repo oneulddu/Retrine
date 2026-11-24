@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.1-beta.1](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.0...v1.0.1-beta.1) (2026-11-24)
+
+
+### Fixes
+
+* WireGuard 유휴 연결 절단과 리스너 복구 회귀 수정 ([c4fa499](https://github.com/oneulddu/Retrine/commit/c4fa49985c63877628963bb564df00c420b59c70))
+* 모션 위 가사 클립 교체와 할당 실패 처리 수정 ([b32ee6f](https://github.com/oneulddu/Retrine/commit/b32ee6f91163b2b426656843f2cfe55e81e9c3fc))
+* 새 디자인 레이어 훅 스레드 가드와 비활성 Fluid 배경 수정 ([1e0b6ee](https://github.com/oneulddu/Retrine/commit/1e0b6eea4214db5f1342a74d2d218b401135778d))
+* 폰트 가져오기·번역 저장소 잠금 해제 순서·정리 용량 표시 수정 ([b210914](https://github.com/oneulddu/Retrine/commit/b2109142418827c8a9d574844d34496ed73cfc52))
+
+
+### Performance
+
+* Smooth 셰이더가 전환 뒤 다음 그림만 읽게 하기 ([130493c](https://github.com/oneulddu/Retrine/commit/130493c67b25c661ecd26362239fee3dde72f816))
+* WireGuard 준비 후 복구 타이머·직접 가사 세션·바이트 집계 줄이기 ([f906985](https://github.com/oneulddu/Retrine/commit/f9069859d2126228ad9f92b5ed6318cdf4be772c))
+* 가사 조회·저장과 잠금화면·Live Activity·가사 화면 유휴 작업 줄이기 ([af4ac9e](https://github.com/oneulddu/Retrine/commit/af4ac9e793a06b878477fd9301f09b2dfeb9f468))
+* 새 디자인 탭바·색 훅·금요일 링·다운로드 버튼 반복 작업 줄이기 ([f39299e](https://github.com/oneulddu/Retrine/commit/f39299eeac2e6c4d65188b3852daec0e40509170))
+* 오디오 기능의 유휴 깨우기 줄이기 ([c560878](https://github.com/oneulddu/Retrine/commit/c560878f9549a5d61fe01e072ffe89c0b1c78d48))
+* 잠금화면 배경·모션 클립·PiP·수면 타이머 반복 작업 줄이기 ([f1a4c25](https://github.com/oneulddu/Retrine/commit/f1a4c25ec033807fa5b64cfe482e5c2d5d549708))
+* 카운터 저장·AutoMix·언어 인식기의 반복 비용 줄이기 ([3d6f4f2](https://github.com/oneulddu/Retrine/commit/3d6f4f2c4f5114c0b0b4d85b8788a2e5ccb54d5f))
+
 ## [1.0.1-beta.0](https://github.com/oneulddu/Retrine/compare/v1.0.0...v1.0.1-beta.0) (2026-11-24)
 
 
