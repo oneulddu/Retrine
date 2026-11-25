@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.1-beta.5](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.4...v1.0.1-beta.5) (2026-11-25)
+
+
+### Fixes
+
+* Pixie 삭제 실패 안내를 개수와 이유로 요약 ([ac8f44e](https://github.com/oneulddu/Retrine/commit/ac8f44e21a1461a1a754a718dd2cdceab83bd4db))
+* Pixie로 받은 곡의 가사를 오프라인용으로 저장 ([967aec7](https://github.com/oneulddu/Retrine/commit/967aec7dc65b812e802f6cfff4fc61cd90a7dde2))
+* Spotify 9.2.2를 Pixie 없이 지원 ([d7d70e2](https://github.com/oneulddu/Retrine/commit/d7d70e25a10e6020e21b2f552556dd803c700398))
+* Spotify 9.2.2에서도 Pixie 다운로드 허용 ([5b07970](https://github.com/oneulddu/Retrine/commit/5b07970c0737d563507e17e5cfd5be89993b3091))
+* Spotify 9.2.2에서도 크레딧 카드 숨기기 ([407e067](https://github.com/oneulddu/Retrine/commit/407e0677db1beeea76fa5d6d681dc502cc353c10))
+* 가사 삭제 직후 다시 켜기와 재생 저장 공간 확보 보완 ([f2a642a](https://github.com/oneulddu/Retrine/commit/f2a642a896fcbda74406d28fac26c001de4daf39))
+* 사용이 꺼진 Pixie 대상은 어떤 빌드에도 넘기지 않기 ([bc228b6](https://github.com/oneulddu/Retrine/commit/bc228b6b90d50acc7a42bb00f47ed79e75a4da27))
+* 좁은 행의 둥근 재생 버튼과 미니 플레이어 영상 마스크 ([e250b11](https://github.com/oneulddu/Retrine/commit/e250b11cbacaba0d3b24a6ff2ba52988affff5ca))
+* 카드를 모두 숨긴 플레이어 아래 빈 스크롤 없애기 ([d949236](https://github.com/oneulddu/Retrine/commit/d9492360e84fe7fca2c8f045316a1df8b14643ca))
+* 플레이어 카드 머리글 숨기기와 Messages 링크 정리 ([bc6f172](https://github.com/oneulddu/Retrine/commit/bc6f1723baed4988185c0a7cde4c28c89492f494))
+* 플레이어 하네스에 Pixie 가사 큐 대역 추가 ([4cf44ff](https://github.com/oneulddu/Retrine/commit/4cf44ff99b74e0e1cea7f03e76c829b31c067990))
+
 ## [1.0.1-beta.4](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.3...v1.0.1-beta.4) (2026-11-25)
 
 
