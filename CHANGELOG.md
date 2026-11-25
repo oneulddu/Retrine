@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.1-beta.4](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.3...v1.0.1-beta.4) (2026-11-25)
+
+
+### Fixes
+
+* RTL에서 모드 설정 색상 견본 행 순서 수정 ([6c2910b](https://github.com/oneulddu/Retrine/commit/6c2910bb62a5311494b09bf15cf0e1df84233d73))
+* 개발 빌드의 폰 드라이버 토큰을 키체인에 저장 ([96d42c8](https://github.com/oneulddu/Retrine/commit/96d42c8e1f7e0b1c0ed91146da8780b45ad51668))
+* 발열 무시를 켠 Visualizer 대체 화면이 과열 때 사라지지 않게 ([d14c165](https://github.com/oneulddu/Retrine/commit/d14c16574ff577aca00f311945957e10805f7e00))
+* 작은 보관함 헤더와 목록이 위로 밀려 올라가지 않게 ([015fe2a](https://github.com/oneulddu/Retrine/commit/015fe2ac87fd55c5284bb252ac192a1442b2992e))
+
+
+### Performance
+
+* Live Activity가 가사 조회 완료 기록을 따로 쌓지 않기 ([e38010c](https://github.com/oneulddu/Retrine/commit/e38010c20d215f3d71608fce02dd39d1b000ffc8))
+* Visualizer가 그리는 빈도만큼만 화면 주사율 요청 ([3f89dc2](https://github.com/oneulddu/Retrine/commit/3f89dc2a2d3bd41689d34e5fd3e01f82216ead41))
+* WireGuard 이미지 변경 때 준비 재검증을 하나로 합치기 ([4c3a186](https://github.com/oneulddu/Retrine/commit/4c3a18662fba3a42a736fbf5456f272873ce7eef))
+* 화면 밖 앨범·아티스트 영상 헤더의 디코더 해제 ([10be11f](https://github.com/oneulddu/Retrine/commit/10be11f70a2253f637697cb4ab9ea4a2c7a26e4b))
+
 ## [1.0.1-beta.3](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.2...v1.0.1-beta.3) (2026-11-25)
 
 
