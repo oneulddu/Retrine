@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.1-beta.3](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.2...v1.0.1-beta.3) (2026-11-25)
+
+
+### Fixes
+
+* Pixie 화면 이동 충돌을 막고 지원 로그에서 기기 정보 빼기 ([182bb5d](https://github.com/oneulddu/Retrine/commit/182bb5d4e3e82d1c9e910011ebcc06c47d65584f))
+* RTL 언어와 큰 글자 크기에서 설정·Sing·Recap·투어 배치 수정 ([8a7b1e5](https://github.com/oneulddu/Retrine/commit/8a7b1e592d67343d6fda070f78882432e15f2c37))
+* Spotify 파일 이동에도 비공개 클래스를 찾고 9.2.0 로컬 재생 허용 ([a5dd8ab](https://github.com/oneulddu/Retrine/commit/a5dd8ab16307f97e648993acbc9e043cbe8625b0))
+* 릴리스에서 진단 서버를 빼고 링크·로그·입력 검사 보강 ([22fb020](https://github.com/oneulddu/Retrine/commit/22fb020be76793ca9d3bd92e028998ed7d8f381f))
+* 프로필 드로어에서 모드 설정 행이 사라지던 문제 수정 ([3e4c2b5](https://github.com/oneulddu/Retrine/commit/3e4c2b51ae0d667b06b03a9065ee4dfd8d0765d2))
+
+
+### Performance
+
+* Smooth 배경·가사 화면·이미지 렌더의 메모리 줄이기 ([f573dae](https://github.com/oneulddu/Retrine/commit/f573daec4e5abbce0838e9b1bc4e5e5792160544))
+* 꺼진 기능의 시작 작업을 미루고 시작 안정성 보강 ([9ca8c94](https://github.com/oneulddu/Retrine/commit/9ca8c94185db14ea43799b367c2436bfcc270011))
+* 누수와 무제한 캐시를 정리하고 번역 첫 읽기 대기 줄이기 ([ec83db9](https://github.com/oneulddu/Retrine/commit/ec83db954f86898ca0ba0d5adc4d697cc21e2c5e))
+
 ## [1.0.1-beta.2](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.1...v1.0.1-beta.2) (2026-11-24)
 
 
