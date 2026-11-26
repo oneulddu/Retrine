@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.1-beta.6](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.5...v1.0.1-beta.6) (2026-11-26)
+
+
+### Fixes
+
+* iPad 창을 줄일 때 가사 커버가 헤더에 가려지지 않게 ([654271b](https://github.com/oneulddu/Retrine/commit/654271bf554b1c4dedac767f6f3dbd6216e8b9ab))
+* iPad 플레이어 패널을 여닫을 때 탭 막대 페이드 경계 없애기 ([#63](https://github.com/oneulddu/Retrine/issues/63)) ([e6d303c](https://github.com/oneulddu/Retrine/commit/e6d303c325047de768ac4c240b86474ba3f2ad7c))
+* Pixie 패치가 실행 메모리 밖 패딩을 쓰지 않게 하기 ([a776af5](https://github.com/oneulddu/Retrine/commit/a776af56d4583f75fc8c84940539007d1af702f0))
+* 배경 색 읽기마다 진행 막대를 다시 배치하지 않기 ([8f74555](https://github.com/oneulddu/Retrine/commit/8f745551695aeabef37c33c3e71cbe41bf97e902))
+* 새 디자인 플레이어·Fluid·가사·재생목록을 Apple Music 방식으로 ([#64](https://github.com/oneulddu/Retrine/issues/64)) ([48f6a0a](https://github.com/oneulddu/Retrine/commit/48f6a0a720722b9c0c360c3eb6644fb37eb3d288))
+* 잠금 화면 가사 클립 발열 대응 보완 ([c30cc3d](https://github.com/oneulddu/Retrine/commit/c30cc3de89e16308790df9242445a05170742159))
+* 잠금 화면 가사 클립의 불필요한 인코딩 줄이기 ([1a2e1fd](https://github.com/oneulddu/Retrine/commit/1a2e1fd73d19b495710a699eb82653837b05d992))
+* 잠금 화면 카드 부모 앱은 서명 불일치 때만 지정 ([586e50d](https://github.com/oneulddu/Retrine/commit/586e50d05944a4a8917673f7882604f50879d35d))
+* 재생 중 불필요한 백그라운드 작업 줄이기 ([1aa0336](https://github.com/oneulddu/Retrine/commit/1aa0336d91453655113a1f8f5f2a4a0e1f3fbdbd))
+* 재서명한 앱에서 잠금 화면 카드를 누르면 Spotify가 열리게 하기 ([#65](https://github.com/oneulddu/Retrine/issues/65)) ([9099eae](https://github.com/oneulddu/Retrine/commit/9099eae87e121abf83b3e4fa6cf5b93bf3b0e14a))
+
+
+### Performance
+
+* 가려지거나 사라진 가사·배경·진행 막대 갱신 멈추기 ([b430906](https://github.com/oneulddu/Retrine/commit/b43090674fd4ec2387b3f2839a57e43ec99ca0c7))
+
 ## [1.0.1-beta.5](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.4...v1.0.1-beta.5) (2026-11-25)
 
 
