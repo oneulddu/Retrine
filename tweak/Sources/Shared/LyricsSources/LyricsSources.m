@@ -38,12 +38,12 @@ static NSString *const kLegacyNetEase = @"spotifyglass.neteaseWordTiming";
 @implementation SGLyricsProvider
 @end
 
-SGLyricsRequestContext *SGLyricsInvoke(SGLyricsProvider *provider, SGLyricsQuery *query, BOOL (^current)(void), void (^done)(SGLyricsResult *, BOOL)) {
+static SGLyricsRequestContext *invoke(SGLyricsRequestContext *context, SGLyricsProvider *provider, SGLyricsQuery *query, BOOL (^current)(void), void (^done)(SGLyricsResult *, BOOL)) {
     SGLyricsQuery *invocation = [SGLyricsQuery new];
     invocation.trackID = query.trackID;
     invocation.title = query.title; invocation.artist = query.artist; invocation.album = query.album;
     invocation.seconds = query.seconds;
-    SGLyricsRequestContext *context = invocation.requestContext = [SGLyricsRequestContext new];
+    invocation.requestContext = context;
     // One deadline covers the entire adapter, including token/ISRC/search/lyrics subrequests.
     // A late provider callback cannot re-enter the walk after it has fallen through.
     __block BOOL completed = NO;
@@ -86,6 +86,31 @@ SGLyricsRequestContext *SGLyricsInvoke(SGLyricsProvider *provider, SGLyricsQuery
         else dispatch_async(dispatch_get_main_queue(), deliver);
     });
     return context;
+}
+
+SGLyricsRequestContext *SGLyricsInvoke(SGLyricsProvider *provider, SGLyricsQuery *query, BOOL (^current)(void), void (^done)(SGLyricsResult *, BOOL)) {
+    return invoke(SGLyricsRequestContext.new, provider, query, current, done);
+}
+
+SGLyricsRequestContext *SGLyricsAskDownloaded(NSString *key, SGLyricsQuery *query,
+    void (^done)(SGBulkReply, SGLyricsResult *, NSTimeInterval)) {
+    SGLyricsProvider *provider = SGLyricsProviderFor(key);
+    SGLyricsRequestContext *context = SGLyricsRequestContext.new;
+    context.bulk = YES;
+    return invoke(context, provider, query, nil, ^(SGLyricsResult *result, BOOL failed) {
+        SGBulkReply reply = SGBulkTemporary;
+        if (result.karaokeLines.count) {
+            SGLyricsTypes filter = SGLyricsSourceTypes(key);
+            SGKaraokeTiming timing = SGKaraokeLinesTiming(result.karaokeLines);
+            reply = ((filter == SGLyricsTypesWords && timing != SGKaraokeTimingWords) ||
+                (filter == SGLyricsTypesSynced && timing == SGKaraokeTimingNone)) ? SGBulkFiltered : SGBulkFound;
+            result = SGLyricsSnapshot(result);
+            if (!result.provider) result.provider = provider.name;
+        } else if (context.credentialRejected) reply = SGBulkCredentialRejected;
+        else if (context.rateLimitUntil > 0) reply = SGBulkRateLimited;
+        else if (!failed && (context.definiteMiss || context.emptyNameSearch || result.instrumental)) reply = SGBulkMiss;
+        done(reply, result, context.rateLimitUntil);
+    });
 }
 
 static SGLyricsRequestContext *invokePin(NSNumber *pin, SGLyricsQuery *query, BOOL (^current)(void),
@@ -1484,6 +1509,12 @@ static void fetchLyrics(NSString *trackID, BOOL advance, void (^done)(SGLyricsRe
 
 void SGLyricsFetch(NSString *trackID, void (^done)(SGLyricsResult *result)) {
     fetchLyrics(trackID, NO, done);
+}
+
+BOOL SGLyricsPlaybackRequestsActive(void) {
+    if (sg_waiting.count) return YES;
+    for (SGLyricsWalk *walk in sg_walks.allValues) if (walk.inFlight.count) return YES;
+    return NO;
 }
 
 BOOL SGLyricsLoadFailed(NSString *trackID) {

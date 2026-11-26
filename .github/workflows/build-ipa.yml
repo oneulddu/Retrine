@@ -21,7 +21,7 @@ on:
         type: boolean
         default: true
       enable_pixie:
-        description: "Include Pixie native downloads (exact Spotify 9.2.0 or 9.1.90 build only)"
+        description: "Include Pixie native downloads (exact Spotify 9.2.0, 9.2.2 or 9.1.90 build only)"
         type: boolean
         default: true
       bundle_id:

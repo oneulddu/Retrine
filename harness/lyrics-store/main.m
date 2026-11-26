@@ -149,8 +149,101 @@ static void checkTranslationLanguage(void) {
     puts("translation language: cached provenance, per-line filtering, changed selection, legacy and Any records passed");
 }
 
+static SGBulkWrite bulk(NSString *track, SGLyricsResult *sheet, SGLyricsLease *lease) {
+    __block NSInteger result = -1;
+    SGLyricsStoreAddAutomatic(track,sheet,lease,^(SGBulkWrite wrote){result=wrote;});
+    pump(^BOOL{return result>=0;}); return result;
+}
+static NSURL *heldDirectory;
+static dispatch_semaphore_t retiredDuringWrite;
+static dispatch_block_t retireWhileWriting;
+static IMP createDirectory;
+static BOOL holdDirectory(id self,SEL sel,NSURL *url,BOOL intermediates,NSDictionary *attributes,NSError **error) {
+    if ([url isEqual:heldDirectory]) {
+        dispatch_semaphore_t signal=retiredDuringWrite;
+        dispatch_async(dispatch_get_main_queue(),retireWhileWriting);
+        CHECK(dispatch_semaphore_wait(signal,dispatch_time(DISPATCH_TIME_NOW,3*NSEC_PER_SEC))==0);
+    }
+    return ((BOOL(*)(id,SEL,NSURL *,BOOL,NSDictionary *,NSError **))createDirectory)(self,sel,url,intermediates,attributes,error);
+}
+static void checkBulkOwnership(void) {
+    NSURL *dir=temp(); SGLyricsStoreConfigureForTests(dir,2,1024*1024);
+    SGLyricsResult *sheet=SGLyricsResult.new; sheet.karaokeLines=@[line(@"Auto",10)];sheet.provider=@"Automatic source";
+    SGLyricsLease *lease=SGLyricsLease.new, *retired=SGLyricsLease.new;
+    [retired invalidate]; CHECK(bulk(@"retired",sheet,retired)==SGBulkFailed && !load(@"retired",nil));
+    CHECK(bulk(@"a",sheet,lease)==SGBulkWritten); CHECK(bulk(@"a",sheet,lease)==SGBulkAlreadyPresent);
+    CHECK(bulk(@"b",sheet,lease)==SGBulkWritten); CHECK(bulk(@"c",sheet,lease)==SGBulkCapacity && !load(@"c",nil));
+    SGLyricsStoreRemoveAutomatic(@[@"b"]); size();
+    // Hold the filesystem operation, not a test lock on the lease. Retirement must
+    // return to the main runloop while this write is outstanding.
+    heldDirectory=dir;retiredDuringWrite=dispatch_semaphore_create(0);
+    Method method=class_getInstanceMethod(NSFileManager.class,@selector(createDirectoryAtURL:withIntermediateDirectories:attributes:error:));
+    createDirectory=method_setImplementation(method,(IMP)holdDirectory);
+    SGLyricsLease *inFlight=SGLyricsLease.new;
+    retireWhileWriting=^{[inFlight invalidate];dispatch_semaphore_signal(retiredDuringWrite);};
+    __block BOOL stopped=NO;
+    SGLyricsStoreAddAutomatic(@"waiting",sheet,inFlight,^(SGBulkWrite result){ CHECK(result==SGBulkFailed);stopped=YES; });
+    pump(^BOOL{return stopped;});method_setImplementation(method,createDirectory);heldDirectory=nil;retireWhileWriting=nil;
+    CHECK(!load(@"waiting",nil));
+    SGLyricsStoreSave(@"a",@[line(@"Player",20)],@"Foreground");
+    size(); ageAll(dir,100);
+    SGLyricsStoreRemoveAutomatic(@[@"b"]);
+    SGLyricsStoreConfigureForTests(dir,3,1024*1024);
+    CHECK(bulk(@"b",sheet,lease)==SGBulkWritten);
+    CHECK(bulk(@"d",sheet,lease)==SGBulkWritten);
+    SGLyricsStoreSave(@"c",@[line(@"New foreground",30)],@"Foreground");
+    SGLyricsStoreSave(@"e",@[line(@"Next foreground",40)],@"Foreground");
+    CHECK(load(@"e",nil).count && load(@"c",nil).count && files(dir).count==3);
+    CHECK(!load(@"b",nil) && !load(@"d",nil));
+    SGLyricsStoreRemoveAutomatic(@[@"a",@"b"]);
+    NSString *credit=nil; CHECK(load(@"a",&credit).count && [credit isEqual:@"Foreground"] && !load(@"b",nil));
+    // A playback-only prune now leaves one free slot and starts the real cooldown.
+    SGLyricsStoreSave(@"f",sheet.karaokeLines,@"Foreground");
+    CHECK(load(@"f",nil).count && files(dir).count==2);
+    CHECK(bulk(@"g",sheet,lease)==SGBulkWritten);
+    SGLyricsStoreSave(@"h",sheet.karaokeLines,@"Foreground");
+    CHECK(load(@"h",nil).count && !load(@"g",nil) && files(dir).count==3);
+    SGLyricsStoreSave(@"i",sheet.karaokeLines,@"Foreground");
+    CHECK(!load(@"i",nil) && files(dir).count==3);
+    CHECK([NSFileManager.defaultManager removeItemAtURL:dir error:nil]);
+}
+
+static IMP readPlist;
+static id holdOwnershipRead(id self, SEL sel, NSURL *url, NSError **error) {
+    if (retireWhileWriting && [url.URLByResolvingSymlinksInPath.URLByDeletingLastPathComponent.path
+                               isEqual:heldDirectory.URLByResolvingSymlinksInPath.path]) {
+        dispatch_async(dispatch_get_main_queue(), retireWhileWriting);
+        retireWhileWriting=nil;
+        CHECK(dispatch_semaphore_wait(retiredDuringWrite,dispatch_time(DISPATCH_TIME_NOW,3*NSEC_PER_SEC))==0);
+    }
+    return ((id(*)(id,SEL,NSURL *,NSError **))readPlist)(self,sel,url,error);
+}
+static void checkPlaybackPruneCancellation(void) {
+    NSURL *dir=temp();
+    NSArray *lines=@[line(@"Playback",0)];
+    NSData *sheet=[NSPropertyListSerialization dataWithPropertyList:SGLyricsStoreEncode(lines,@"Player")
+        format:NSPropertyListBinaryFormat_v1_0 options:0 error:nil];
+    for (unsigned i=0;i<1000;i++) @autoreleasepool {
+        CHECK(([sheet writeToURL:[dir URLByAppendingPathComponent:[NSString stringWithFormat:@"%u.plist",i]] atomically:NO]));
+    }
+    SGLyricsStoreConfigureForTests(dir,1000,30*1024*1024);
+    SGLyricsLease *lease=SGLyricsLease.new;
+    heldDirectory=dir;retiredDuringWrite=dispatch_semaphore_create(0);
+    __block BOOL retired=NO;
+    retireWhileWriting=^{ [lease invalidate];retired=YES;dispatch_semaphore_signal(retiredDuringWrite); };
+    Method method=class_getClassMethod(NSDictionary.class,@selector(dictionaryWithContentsOfURL:error:));
+    readPlist=method_setImplementation(method,(IMP)holdOwnershipRead);
+    SGLyricsStoreSaveWithLease(@"new",lines,@"Player",lease);
+    size(); // Drain the write, servicing main while the utility reader is held.
+    method_setImplementation(method,readPlist);heldDirectory=nil;
+    CHECK(retired && files(dir).count<=1000);
+    CHECK([NSFileManager.defaultManager removeItemAtURL:dir error:nil]);
+}
+
 int main(void) {
     @autoreleasepool {
+        checkPlaybackPruneCancellation();
+        checkBulkOwnership();
         checkTranslationLanguage();
         SGKaraokeLine *lead = line(@"Hello", 1000);
         lead.backing = line(@"Oh", 1100); lead.pronunciation = line(@"Hel-lo", 1000);

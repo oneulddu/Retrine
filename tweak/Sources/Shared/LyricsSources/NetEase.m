@@ -24,7 +24,7 @@ static void get(SGLyricsRequestContext *context, NSString *path, NSDictionary<NS
         [context noteFailure:![root isKindOfClass:NSDictionary.class]];
         id code = SGLyricsField(root, @"code");
         if (code && ![code isEqual:@200]) [context noteFailure:YES];
-        if (error || !root) SGLog(@"netease: %@ failed: status %ld, error %@", path, (long)[(NSHTTPURLResponse *)response statusCode], error);
+        if (error || !root) SGLog(@"netease: %@ failed: status %ld, error %ld", path, (long)[(NSHTTPURLResponse *)response statusCode], (long)error.code);
         dispatch_async(dispatch_get_main_queue(), ^{ done([root isKindOfClass:NSDictionary.class] ? root : nil); });
     });
     [context trackTask:task];
@@ -90,7 +90,7 @@ static void tryLyrics(SGLyricsRequestContext *context, NSArray<NSString *> *song
         NSArray<SGKaraokeLine *> *lines = [yrc isKindOfClass:NSString.class] ? SGLyricsPieceLines(yrc, NO) : nil;
         if (yrc && yrc != NSNull.null && ![yrc isEqual:@""] && !lines) [context noteFailure:YES];
         if (lines) {
-            SGLog(@"netease: song %@ has %lu word timed lines", songs[index], (unsigned long)lines.count);
+            SGLog(@"netease: %lu word timed lines", (unsigned long)lines.count);
             done(lines);
         } else {
             tryLyrics(context, songs, index + 1, done);
@@ -147,7 +147,7 @@ SGLyricsAsk SGNetEaseAsk = ^(SGLyricsQuery *query, void (^done)(SGLyricsResult *
             return [@(labs([a[@"duration"] integerValue] / 1000 - seconds)) compare:@(labs([b[@"duration"] integerValue] / 1000 - seconds))];
         }];
         NSArray *ids = [[fitting valueForKey:@"id"] subarrayWithRange:NSMakeRange(0, MIN(fitting.count, kTriedSongs))];
-        if (!ids.count) SGLog(@"netease: no recording of %@ by %@ within %lds of %lds", title, lead, (long)kLengthSlack, (long)seconds);
+        if (!ids.count) SGLog(@"netease: no matching recording");
         tryLyrics(query.requestContext, ids, 0, answer);
     });
 };

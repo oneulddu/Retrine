@@ -243,7 +243,7 @@ Shared:
                   currently rejected rather than queueing part of an album. Checked by harness/album-queue/;
                   Spotify 9.1.90 simulator evidence and the remaining device checks are in its README.
     Privacy/      telemetry blocking and its counters, and the tracking taken off shared open.spotify.com links
-                  (CleanLinks.x over the cleaner in CleanLinks.m)
+                  (CleanLinks.x over the cleaner in CleanLinks.m), a Messages compose body included
     ArtistBlock/  tracks by blocked artists skipped as they start (ArtistSkip.x), the list and the Blocked artists page under Player;
                   single songs blocked from the redesigned player's ⋯ menu (Block This Song, kept by URI on the phone and
                   active whatever the artist switch says) are skipped the same way and unblocked by a swipe on Player ›
@@ -287,11 +287,21 @@ Shared:
                   replies, pass through the keeper so offline saves and paused lock-screen notifications include
                   them. Under Any they are all kept. Generated translations and AI pronunciation stay with their own
                   stores. File work runs on one
-                  utility queue. The store caps at 1000 tracks / 30 MiB, pruning oldest-modified entries to 90%
-                  of both caps at most once a minute (hits touch the date; over-budget writes during that minute
-                  are skipped). Pin changes and Reload lyrics delete the old file. Turning the switch off leaves
-                  files intact; “Delete saved lyrics” removes them and shows the remaining size. The codec and
-                  eviction checks run in harness/lyrics-store. The Lyrics page's Delay (Timing, 0 to 1000 ms, either look)
+                  utility queue. The store caps at 1000 tracks / 30 MiB. Sheets saved for Pixie downloads are
+                  evicted first, oldest-modified first, whenever a playback write needs room; pruning playback-saved
+                  entries to 90% of both caps happens at most once a minute (hits touch the date; a playback write
+                  that would need it within that minute is skipped). Pin changes and Reload lyrics delete
+                  the old file. Turning the switch off leaves files intact; “Delete saved lyrics” removes them and
+                  shows the remaining size. The codec and eviction checks run in harness/lyrics-store.
+                  The opt-in “Save lyrics for Pixie downloads” (PixieLyricsQueue.m, after EeveeSpotifyReincarnated
+                  eddb1c2) needs that switch and Pixie: the companion reports verified download completions, the
+                  downloaded IDs and verified removals, and one low-priority queue asks the usual sources for each
+                  missing track without touching the player, saving into this store. Definite misses are kept per
+                  track and source, temporary failures and rate limits wait until the next day or the server's
+                  Retry-After, and a rejected key pauses that source. The ledger (PixieLyrics/queue.plist beside
+                  Lyrics, backup-excluded, no credentials) survives relaunches; Delete saved lyrics also clears it and
+                  keeps the downloads present at that moment from refilling. A removed download drops only a sheet
+                  the queue saved. Spotify's own offline lyrics database is not written (harness/lyrics-sources). The Lyrics page's Delay (Timing, 0 to 1000 ms, either look)
                   shows every line that much later than the song, for Bluetooth headphones: whatever times lines
                   against the position takes it off first (the redesign's lyrics view and its word sweep, the lock
                   screen's line and artwork, the Live Activity, the native look's lyrics page for local files), and a
@@ -699,8 +709,13 @@ Shared:
                   SGShownTrackArtwork, not title-matched system artwork that may be a placeholder or the
                   previous song's cover. Missing or failed covers use the dark fallback; late results are
                   guarded by track, source URL and generation. Previews are drawn on a queue apart from the clips, and while the
-                  lock screen is asking, the next line's preview and clip are drawn ahead and a ready preview is handed
-                  over at once. Each lyric ID owns one ordinary Now Playing artwork object, reused by ready-preview,
+                  lock screen is asking for the line showing (an ask for a line gone by does not count), the next line's
+                  preview and clip are drawn ahead and a ready preview is handed over at once; from the thermal state Fair
+                  up, a clip of many frames (over moving artwork, or Animated) is left for the lock screen's own ask, and
+                  Low Power Mode draws nothing ahead. A clip being written stops as soon as its line is neither showing
+                  nor the one drawn ahead, rather than encoding to the end for nobody. From Serious up, and in Low Power
+                  Mode, the lines go Still over the cover (no motion, no breath) under their own ID, and the chosen look
+                  comes back once the phone cools or Low Power Mode is off. Each lyric ID owns one ordinary Now Playing artwork object, reused by ready-preview,
                   artist-row and Spotify/extras resends. Its synchronous handler uses a ready frame from this render
                   generation while a miss draws off main, never the plain cover. A new ID replaces the object;
                   turning lyrics off restores the
@@ -1383,7 +1398,9 @@ Native:
     Navbar/       Spotify's tab bar composed (Navbar.x, NavbarLayout.m, hooked from TabBarHooks.x), the Navbar and Add a tab pages
     NowPlayingBar/ the device button hidden, the bar's flags
     Player/       the full screen player (Player.x), its cards and buttons hidden and a hidden lyric preview's room given
-                  to the cover (PlayerDeclutter.x), the glass lyrics card (LyricsCard.x), the gestures' hookup and the hold
+                  to the cover (PlayerDeclutter.x; with all nine cards hidden the list's section headers collapse
+                  too, never one holding the slider or controls, and the trailing blank scroll space is removed),
+                  the glass lyrics card (LyricsCard.x), the gestures' hookup and the hold
                   on either side of the cover that plays at the Gestures page's hold speed until the finger lifts
                   (PlayerGestures.x), the list's pull
                   held off while the progress bar is scrubbed (PlayerScrub.x), the Queue & devices flags. The scrub and
@@ -1517,7 +1534,9 @@ Redesigned:
                   the move sampled `motion`, Search on the trailing circle and drawn once through every move `search`, what an earlier state leaves `states`,
                   one expand recorded off the screen frame by frame by harness/tabbar/capture.sh),
                   the scroll's steps checked by harness/tabbar/minimize-check.c
-    NowPlayingBar/ the glass now playing bar (NowPlayingBar.x). A regular-width iPad automatically gets a capsule
+    NowPlayingBar/ the glass now playing bar (NowPlayingBar.x). Video artwork that is not square is masked to the
+                  centred square in the chosen artwork shape until a square cover returns (harness/now-playing-bar).
+                  A regular-width iPad automatically gets a capsule
                   with shuffle, repeat, lyrics and queue alongside artwork, title and play. Shuffle and repeat use
                   Spotify's player commands; lyrics opens the player on its embedded lyrics, and queue opens the
                   existing Playing Next sheet. The capsule grows toward, but never within 16 pt of, the nearest tab platter seen on its row, a split tab's circle included.
@@ -2136,7 +2155,10 @@ Redesigned:
                   there and the row carries the Kit's stand-ins, which draw their glyph and fire them; download is
                   pinned beside ⋯ in the top corner, the two one 88x44 glass capsule that download carries, laid right
                   under ⋯ and, while the page fades in, over the field's veil, so ⋯ is never its glyph alone; right to
-                  left the pair mirrors into the left corner, ⋯ outermost (Kit/SGRActionRow.m). Where that capsule covers
+                  left the pair mirrors into the left corner, ⋯ outermost (Kit/SGRActionRow.m). When the shown buttons
+                  do not fit beside Play's capsule, measured once with the longer of Spotify's localized Play and Pause,
+                  Play becomes a 48 pt glyph-only circle; add's saved state is a 22 pt accent disc with a dark check
+                  (harness/action-row/). Where the download capsule covers
                   the Card cover (a 402pt phone: the cover {77, 76, 248, 248}, the capsule {298, 62, 88, 44}), the cover is
                   drawn smaller: square, on the same vertical axis, its bottom edge kept and its top 8pt under the capsule
                   ({96, 114, 210, 210}), its shadow and the veil on its picture with it, measured with the page at rest so a

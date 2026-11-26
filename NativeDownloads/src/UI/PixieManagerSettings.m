@@ -1,5 +1,6 @@
 #import "Localization.h"
 #import "NativeAdmission.h"
+#import "TargetProfile.h"
 #import "DownloadCompatibility.h"
 #import "OfflineDevices.h"
 #import "TrackExport.h"
@@ -446,7 +447,7 @@ static UITableViewCell *SAPPlainSettingsCell(NSString *label,NSString *value) {
 - (NSString *)tableView:(UITableView *)table titleForFooterInSection:(NSInteger)section {
     if(section==0) {
         NSDictionary *startup=self.snapshot[@"jailbreak_bootstrap"];
-        if(startup&&![startup[@"native_patches_ready"]boolValue])return [NSString stringWithFormat:SAPL(@"settings.pixie.footer.init_failed",@"Pixie could not initialize downloads (%@). Supported Spotify: 9.1.90. Detected: %@. Menu and logs remain available."),startup[@"reason"],startup[@"detected_spotify_version"]];
+        if(startup&&![startup[@"native_patches_ready"]boolValue])return [NSString stringWithFormat:SAPL(@"settings.pixie.footer.init_failed",@"Pixie could not initialize downloads (%@). Supported Spotify: %@. Detected: %@. Menu and logs remain available."),startup[@"reason"],@SAP_SPOTIFY_VERSION,startup[@"detected_spotify_version"]];
         return SAPL(@"settings.pixie.footer.download_export",@"Downloads stay in Spotify. Audio export creates files you can save to Files or share.");
     }
     if(section==1) {

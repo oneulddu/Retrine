@@ -521,6 +521,142 @@ static void checkArtworkShape(void) {
     unset(SGRKeyBarArtworkShape);
 }
 
+// A music video in the cover's place (Eevee issue #193): a 71x40 view with no square cover in the card is masked to the
+// 40pt square in its middle with the cover's corners, for each shape; the text beside it is left alone; and the mask
+// goes once a square cover is back.
+static void checkVideoCover(UIWindow *window) {
+    UIView *card = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 360, 56)];
+    card.backgroundColor = UIColor.darkGrayColor;
+    UIView *video = [[UIView alloc] initWithFrame:CGRectMake(8, 8, 71, 40)];
+    CAGradientLayer *frames = [CAGradientLayer layer];
+    frames.frame = video.bounds;
+    frames.startPoint = CGPointMake(0, 0.5);
+    frames.endPoint = CGPointMake(1, 0.5);
+    frames.colors = @[(id)UIColor.systemRedColor.CGColor, (id)UIColor.systemYellowColor.CGColor, (id)UIColor.systemBlueColor.CGColor];
+    [video.layer addSublayer:frames];
+    [card addSubview:video];
+    UIView *text = [[UIView alloc] initWithFrame:CGRectMake(87, 8, 60, 40)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+    title.text = @"Title";
+    [text addSubview:title];
+    [card addSubview:text];
+    [window addSubview:card];
+    sg_cardArtwork = nil;
+    struct { NSInteger shape; BOOL stored; CGFloat radius; NSString *shot; } steps[] = {
+        {0, NO, 20, @"video-cover-circle"}, {SGRBarArtworkShapeRoundedSquare, YES, 8, @"video-cover-rounded-square"},
+    };
+    for (size_t i = 0; i < sizeof steps / sizeof *steps; i++) {
+        if (steps[i].stored) SGSetInt(SGRKeyBarArtworkShape, steps[i].shape);
+        else unset(SGRKeyBarArtworkShape);
+        restyleCardContent(card);
+        CAShapeLayer *mask = [video.layer.mask isKindOfClass:CAShapeLayer.class] ? (CAShapeLayer *)video.layer.mask : nil;
+        CGRect square = CGRectMake(15.5, 0, 40, 40);
+        UIBezierPath *want = [UIBezierPath bezierPathWithRoundedRect:square cornerRadius:steps[i].radius];
+        if (!mask || !CGPathEqualToPath(mask.path, want.CGPath) || sg_cardArtwork != video || text.layer.mask) {
+            HARNESS_FAIL(@"video cover %@: wanted the 40pt square at {15.5, 0} with %.0fpt corners, got mask %@ path %@, artwork %@, text mask %@",
+                         steps[i].shot, steps[i].radius, mask, mask ? [UIBezierPath bezierPathWithCGPath:mask.path] : nil, sg_cardArtwork, text.layer.mask);
+        }
+        CGFloat radius = 0;
+        CGRect frame = SGRNowPlayingArtworkFrameIn(card, &radius);
+        if (!CGRectEqualToRect(frame, CGRectMake(23.5, 8, 40, 40)) || radius != steps[i].radius) {
+            HARNESS_FAIL(@"video cover %@: the morph was handed %@ r=%.1f, wanted {23.5, 8, 40, 40} r=%.0f",
+                         steps[i].shot, NSStringFromCGRect(frame), radius, steps[i].radius);
+        }
+        shoot(card, card.bounds, steps[i].shot);
+        sg_checks++;
+    }
+    // A square cover again (Spotify's own, 4pt corners): it is the cover, and the video's mask goes.
+    UIView *cover = [[UIView alloc] initWithFrame:CGRectMake(8, 8, 40, 40)];
+    cover.layer.cornerRadius = 4;
+    cover.backgroundColor = UIColor.systemGreenColor;
+    [video removeFromSuperview];
+    [card insertSubview:video atIndex:0];
+    [card addSubview:cover];
+    restyleCardContent(card);
+    if (video.layer.mask || sg_cardArtwork != cover) {
+        HARNESS_FAIL(@"video cover: with a square cover back the video kept mask %@, artwork %@", video.layer.mask, sg_cardArtwork);
+    }
+    sg_checks++;
+    [card removeFromSuperview];
+    unset(SGRKeyBarArtworkShape);
+}
+
+// A 56pt card in `window` with a 71x40 video view at `x`, for the cases below.
+static UIView *videoCard(UIWindow *window, CGFloat x, UIView **video) {
+    UIView *card = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 360, 56)];
+    *video = [[UIView alloc] initWithFrame:CGRectMake(x, 8, 71, 40)];
+    [card addSubview:*video];
+    [window addSubview:card];
+    sg_cardArtwork = nil;
+    return card;
+}
+
+// Whether `video` carries the circle mask on the 40pt square in its middle and is the bar's artwork.
+static BOOL videoMasked(UIView *video) {
+    CAShapeLayer *mask = [video.layer.mask isKindOfClass:CAShapeLayer.class] ? (CAShapeLayer *)video.layer.mask : nil;
+    UIBezierPath *want = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(15.5, 0, 40, 40) cornerRadius:20];
+    return mask && CGPathEqualToPath(mask.path, want.CGPath) && sg_cardArtwork == video;
+}
+
+// What is not the video around it: a button nearer the leading edge whose 36x28 image is no video; a hidden rounded
+// cover, which is not the cover shown; and the masked view itself made square again, which is no video any more.
+static void checkVideoCoverNeighbours(UIWindow *window) {
+    unset(SGRKeyBarArtworkShape);
+    UIView *video;
+    UIView *card = videoCard(window, 52, &video);
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(4, 10, 44, 36)];
+    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(4, 4, 36, 28)];
+    [button addSubview:image];
+    [card addSubview:button];
+    restyleCardContent(card);
+    if (!videoMasked(video) || image.layer.mask) {
+        HARNESS_FAIL(@"video cover beside a button: video mask %@, the button's image mask %@, artwork %@",
+                     video.layer.mask, image.layer.mask, sg_cardArtwork);
+    }
+    sg_checks++;
+    [card removeFromSuperview];
+
+    card = videoCard(window, 8, &video);
+    UIView *hidden = [[UIView alloc] initWithFrame:CGRectMake(8, 8, 40, 40)];
+    hidden.layer.cornerRadius = 4;
+    hidden.hidden = YES;
+    [card addSubview:hidden];
+    restyleCardContent(card);
+    if (!videoMasked(video)) {
+        HARNESS_FAIL(@"video cover with a hidden square cover: video mask %@, artwork %@", video.layer.mask, sg_cardArtwork);
+    }
+    sg_checks++;
+    [card removeFromSuperview];
+
+    // A hidden rounded cover first in the card, holding a video-sized child at the video's leading edge: the
+    // hidden child is not the video shown.
+    card = videoCard(window, 8, &video);
+    hidden = [[UIView alloc] initWithFrame:CGRectMake(8, 8, 40, 40)];
+    hidden.layer.cornerRadius = 4;
+    hidden.hidden = YES;
+    UIView *hiddenChild = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 71, 40)];
+    [hidden addSubview:hiddenChild];
+    [card insertSubview:hidden atIndex:0];
+    restyleCardContent(card);
+    if (!videoMasked(video) || hiddenChild.layer.mask) {
+        HARNESS_FAIL(@"video cover after a hidden cover's child: video mask %@, hidden child mask %@, artwork %@",
+                     video.layer.mask, hiddenChild.layer.mask, sg_cardArtwork);
+    }
+    sg_checks++;
+    [card removeFromSuperview];
+
+    card = videoCard(window, 8, &video);
+    restyleCardContent(card);
+    if (!videoMasked(video)) HARNESS_FAIL(@"video cover before reuse: not masked (%@)", video.layer.mask);
+    video.frame = CGRectMake(8, 8, 40, 40);
+    restyleCardContent(card);
+    if (video.layer.mask || sg_cardArtwork == video) {
+        HARNESS_FAIL(@"video view reused as a 40pt square with square corners kept mask %@, artwork %@", video.layer.mask, sg_cardArtwork);
+    }
+    sg_checks++;
+    [card removeFromSuperview];
+}
+
 static void runEnabled(UIView *page);
 static void runDisabled(void);
 @interface TitleRefreshProbe : UIView
@@ -709,6 +845,8 @@ static void runDisabled(void) {
     checkNextButton();
     checkConnectButton();
     checkArtworkShape();
+    checkVideoCover(UIApplication.sharedApplication.delegate.window);
+    checkVideoCoverNeighbours(UIApplication.sharedApplication.delegate.window);
     checkStaleCapsuleRow();
     checkCapsuleBesideSplitTab();
 

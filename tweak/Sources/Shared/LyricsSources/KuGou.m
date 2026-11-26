@@ -63,7 +63,7 @@ static void tryLyrics(SGLyricsRequestContext *context, NSArray *candidates, NSUI
         return lines;
     }, ^(NSArray<SGKaraokeLine *> *lines) {
         if (lines) {
-            SGLog(@"kugou: lyrics %@ have %lu word timed lines", stringIn(candidate[@"id"]), (unsigned long)lines.count);
+            SGLog(@"kugou: %lu word timed lines", (unsigned long)lines.count);
             done(lines);
         } else {
             tryLyrics(context, candidates, index + 1, done);
@@ -105,7 +105,7 @@ SGLyricsAsk SGKuGouAsk = ^(SGLyricsQuery *query, void (^done)(SGLyricsResult *re
         }];
         return [fitting copy];
     }, ^(NSArray *fitting) {
-        if (!fitting.count) SGLog(@"kugou: no recording of %@ by %@ near %lds", query.title, lead, (long)query.seconds);
+        if (!fitting.count) SGLog(@"kugou: no matching recording");
         tryLyrics(query.requestContext, fitting, 0, ^(NSArray<SGKaraokeLine *> *lines) {
             if (!lines.count) {
                 done(nil);

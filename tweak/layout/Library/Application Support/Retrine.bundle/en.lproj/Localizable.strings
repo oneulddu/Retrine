@@ -1351,6 +1351,13 @@
 "settings.lyrics.offline.none" = "None";
 "settings.lyrics.offline.subtitle" = "Saved lyrics play without a connection.";
 "settings.lyrics.offline.title" = "Keep lyrics for offline listening";
+"settings.lyrics.pixie.capacity" = "Lyrics storage is full.";
+"settings.lyrics.pixie.counts" = "Saved: %@ · Missing: %@ · Deferred: %@";
+"settings.lyrics.pixie.hint" = "Ask your enabled lyrics sources about downloaded songs. Turning this off cancels the queue, not the saved lyrics.";
+"settings.lyrics.pixie.missing" = "Download missing lyrics";
+"settings.lyrics.pixie.pause" = "Pause lyrics downloads";
+"settings.lyrics.pixie.title" = "Save lyrics for Pixie downloads";
+"settings.lyrics.pixie.unavailable" = "Could not read the download library or queue.";
 "settings.lyrics.pip.alignment" = "Text alignment";
 "settings.lyrics.pip.aspect" = "Aspect ratio";
 "settings.lyrics.pip.background" = "Background";
@@ -1907,7 +1914,6 @@
 "settings.pixie.delete.cancelled" = "Deletion cancelled. Submitted native commands were not undone; unverified results remain uncertain.";
 "settings.pixie.delete.conflicting_identities" = "Conflicting selected track identities. No commands were sent.";
 "settings.pixie.delete.download_retained" = "Spotify still reports a download, pending policy, expired item, or error state.";
-"settings.pixie.delete.incomplete" = "Spotify did not confirm removal of every selected track. Retained and uncertain results are listed individually.";
 "settings.pixie.delete.invalid_baseline" = "Spotify did not return a complete valid native context baseline. No commands were sent.";
 "settings.pixie.delete.invalid_identity" = "Invalid selected track or album identity. No commands were sent.";
 "settings.pixie.delete.invalid_item_states" = "Spotify omitted or returned invalid selected-item states. No commands were sent.";
@@ -1919,6 +1925,10 @@
 "settings.pixie.delete.playlist_timeout" = "Playlist read timed out.";
 "settings.pixie.delete.preserved_context" = "Preserved %@ because it includes unselected or unsupported items.";
 "settings.pixie.delete.read_timeout" = "Native read timed out.";
+"settings.pixie.delete.reason_context" = "Playlist or album kept to protect other tracks: %lu";
+"settings.pixie.delete.reason_download" = "Spotify still reports a download: %lu";
+"settings.pixie.delete.reason_library" = "Library removal not confirmed: %lu";
+"settings.pixie.delete.reason_unreadable" = "Spotify’s current state could not be read: %lu";
 "settings.pixie.delete.saved_album_preserved" = "The associated saved album was preserved.";
 "settings.pixie.delete.target_unreadable" = "Targeted removal was skipped because its current native state could not be read.";
 "settings.pixie.delete.verification_timeout" = "Native verification timed out. Unconfirmed removals remain uncertain.";
@@ -2138,7 +2148,7 @@
 "settings.pixie.footer.diagnostics" = "Enable Diagnostics for detailed passive events.";
 "settings.pixie.footer.download_export" = "Downloads stay in Spotify. Audio export creates files you can save to Files or share.";
 "settings.pixie.footer.export" = "Export downloaded Spotify audio to external apps or Files from Pixie or Spotify’s Share as file option. Choose a destination in the share sheet. The selected format applies to future exports.";
-"settings.pixie.footer.init_failed" = "Pixie could not initialize downloads (%@). Supported Spotify: 9.1.90. Detected: %@. Menu and logs remain available.";
+"settings.pixie.footer.init_failed" = "Pixie could not initialize downloads (%@). Supported Spotify: %@. Detected: %@. Menu and logs remain available.";
 "settings.pixie.footer.troubleshooting" = "%@\n\nOnly change settings in this menu if downloads are not working.";
 "settings.pixie.header.compatibility" = "Download compatibility";
 "settings.pixie.header.diagnostics" = "Diagnostics";
@@ -2230,9 +2240,8 @@
 "settings.pixie.library.omitted_tracks" = "Native offline item validation omitted requested tracks";
 "settings.pixie.library.refresh_hint" = "Tap Refresh to load downloaded tracks.";
 "settings.pixie.library.release_track_count" = "%@%@%@ · %lu tracks";
-"settings.pixie.library.removal_counts" = "Offline removal confirmed: %lu / %lu\nLibrary removal confirmed: %lu / %lu";
+"settings.pixie.library.removal_counts" = "Removed from library: %lu / %lu\nRemoved from offline storage: %lu / %lu";
 "settings.pixie.library.removal_incomplete" = "Removal incomplete";
-"settings.pixie.library.removal_unconfirmed" = "Removal was not confirmed.";
 "settings.pixie.library.select" = "Select";
 "settings.pixie.library.snapshot_missing" = "A library snapshot is no longer available.";
 "settings.pixie.library.still_downloading" = "Still downloading";

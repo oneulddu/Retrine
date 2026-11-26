@@ -378,9 +378,11 @@ static void keepAnswer(NSString *trackID, id answer) {
 }
 
 // The ask with the key passed in, which harness/spicy-lyrics/ drives without a Keychain.
-static BOOL deliverCached(NSString *trackID, void (^done)(SGLyricsResult *)) {
+static BOOL deliverCached(SGLyricsQuery *query, void (^done)(SGLyricsResult *)) {
+    NSString *trackID = query.trackID;
     id kept = trackID ? sg_answers[trackID] : nil;
     if (!kept) return NO;
+    if (kept == NSNull.null) query.requestContext.definiteMiss = YES;
     done(kept == NSNull.null ? nil : kept);
     return YES;
 }
@@ -392,7 +394,7 @@ void SGSpicyLyricsAskWith(NSString *key, SGLyricsQuery *query, void (^done)(SGLy
         done(nil);
         return;
     }
-    if (deliverCached(trackID, done)) return;
+    if (deliverCached(query, done)) return;
     NSTimeInterval now = uptime();
     if (sg_refused && now < sg_refusedUntil) {
         [query.requestContext noteFailure:YES];
@@ -401,7 +403,7 @@ void SGSpicyLyricsAskWith(NSString *key, SGLyricsQuery *query, void (^done)(SGLy
     }
     if (now < sg_waitUntil) {
         // Lost rather than "no lyrics", so the walk is not kept and asks again once the wait is over.
-        SGLog(@"spicy lyrics: %@ skipped, rate limited for %.0fs more", trackID, sg_waitUntil - now);
+        SGLog(@"spicy lyrics: rate limited for %.0fs more", sg_waitUntil - now);
         SGLyricsNoteReply(nil, [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCannotConnectToHost userInfo:nil]);
         [query.requestContext noteFailure:YES];
         done(nil);
@@ -425,6 +427,7 @@ void SGSpicyLyricsAskWith(NSString *key, SGLyricsQuery *query, void (^done)(SGLy
             SGLog(@"spicy lyrics: rate limited (%ld), leaving it alone for %.0fs", (long)status, wait);
         }
         if (status == 401 || status == 403) {
+            query.requestContext.credentialRejected = YES;
             sg_refused = errorCodeIn(root) ?: @"";
             sg_refusedUntil = uptime() + kRefusedWait;
             SGLog(@"spicy lyrics: the key was refused (%ld), not asking for %.0fs", (long)status, kRefusedWait);
@@ -432,10 +435,11 @@ void SGSpicyLyricsAskWith(NSString *key, SGLyricsQuery *query, void (^done)(SGLy
             return;
         }
         if (status == 200 || status == 404) sg_refused = nil;
+        if (status == 404) query.requestContext.definiteMiss = YES;
         SGLyricsResult *result = status == 200 ? SGSpicyLyricsResult(root) : nil;
         if (status == 200 && !result) [query.requestContext noteFailure:YES];
-        if (!query.requestContext.failed && (status == 200 || status == 404 || status == 400)) keepAnswer(trackID, result ?: NSNull.null);
-        SGLog(@"spicy lyrics: %@ %@", trackID, result
+        if (!query.requestContext.failed && (result || status == 404)) keepAnswer(trackID, result ?: NSNull.null);
+        SGLog(@"spicy lyrics: %@", result
               ? [NSString stringWithFormat:@"has %lu %@ lines", (unsigned long)result.karaokeLines.count,
                  result.wordTimed ? @"word timed" : result.synced ? @"line timed" : @"untimed"]
               : [NSString stringWithFormat:@"has nothing (%ld)", (long)status]);
@@ -444,7 +448,7 @@ void SGSpicyLyricsAskWith(NSString *key, SGLyricsQuery *query, void (^done)(SGLy
 }
 
 SGLyricsAsk SGSpicyLyricsAsk = ^(SGLyricsQuery *query, void (^done)(SGLyricsResult *result)) {
-    if (deliverCached(query.trackID, done)) return;
+    if (deliverCached(query, done)) return;
     SGSpicyLyricsAskWith(storedKey(query.requestContext), query, done);
 };
 
@@ -476,6 +480,7 @@ static void dropKeyState(void) {
 static BOOL setKey(NSString *key) {
     dropKeyState();
     if (!storeKey(key)) return NO;
+    [NSUserDefaults.standardUserDefaults setObject:NSUUID.UUID.UUIDString forKey:@"spotifyglass.lyrics.pixie.spicyRevision"];
     NSMutableArray<NSString *> *order = [SGLyricsOrder() mutableCopy];
     [order removeObject:SGSpicyLyricsKey];
     if (key.length) [order insertObject:SGSpicyLyricsKey atIndex:0];

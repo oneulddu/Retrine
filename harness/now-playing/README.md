@@ -60,7 +60,8 @@ ActivityKit bridge and unrelated services. Saved-translation store completions a
 paused artist-row/artwork deletion without a lyrics view, activity restore/save/delete/language
 and source replacement, and no activity-triggered automatic translation are covered. A held
 clip encoder checks that same-track seeks discard obsolete next-line jobs and serve current
-demand before the latest prefetch. A held filesystem cleanup interleaves an already-queued
+demand before the latest prefetch, and that the held clip, its line seeked past, stops rather than
+finishing (the encoder stand-ins ask `current` as the real writers do each frame). A held filesystem cleanup interleaves an already-queued
 worker with a new track's cleanup and video request; the delivered URL must remain readable
 after both cleanups finish.
 

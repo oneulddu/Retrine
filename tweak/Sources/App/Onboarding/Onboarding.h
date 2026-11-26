@@ -29,7 +29,7 @@ BOOL SGWhatsNewShowing(void);
 // MadeFor is the release base. The IPA build reads flags from its actual input.
 // Supported and likely-working versions skip the install warning; About distinguishes the latter.
 #define SGSpotifyMadeFor @"9.2.0"
-#define SGSpotifySupportedVersions @[@"9.1.90", SGSpotifyMadeFor]
+#define SGSpotifySupportedVersions @[@"9.1.90", SGSpotifyMadeFor, @"9.2.2"]
 #define SGSpotifyLikelyWorksVersions @[]
 @class SGModRow;
 // SGEeveeSpotifyInjected() is Shared/Lyrics/Lyrics.h's.

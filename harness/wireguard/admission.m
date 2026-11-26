@@ -57,7 +57,8 @@ int main(void) {
         BOOL passed = YES;
         for (NSArray<NSString *> *target in @[
             @[@"9.1.90", @"919002269", @"FBCE22C1-7E1B-3E0D-9BE8-66FF9291943E", @"2E074234-CFC6-3F0E-9255-C9881824167A"],
-            @[@"9.2.0", @"920002054", @"B49E7578-1D86-35D3-8BB5-7DAF68FED8A8", @"30BAC55F-8361-373A-AD60-7F0535395641"]
+            @[@"9.2.0", @"920002054", @"B49E7578-1D86-35D3-8BB5-7DAF68FED8A8", @"30BAC55F-8361-373A-AD60-7F0535395641"],
+            @[@"9.2.2", @"920202587", @"BEDF0071-845D-39BB-B2D0-96F9A8095E66", @"527CCB30-A88F-3DAD-B1B9-85336D3BCAD6"]
         ]) {
             version = target[0]; build = target[1];
             imageUUID(0, target[2]); imageUUID(1, target[3]);
@@ -80,7 +81,7 @@ int main(void) {
         mainName = NULL;
         passed &= expect(NO, @"missing dyld name");
         if (!passed) return 1;
-        puts("PASS: exact 9.1.90/9.2.0 admission and wrong-build/main/shared UUID rejection");
+        puts("PASS: exact Spotify transport admission and wrong-build/main/shared UUID rejection");
         return 0;
     }
 }

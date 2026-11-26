@@ -253,12 +253,13 @@ static BOOL writeFrame(NSURL *file, CGImageRef frame) {
     NSData *data = UIImagePNGRepresentation([UIImage imageWithCGImage:frame]);
     return [data writeToURL:file atomically:YES];
 }
-static NSMutableArray<NSString *> *encodedLines;
+static NSMutableArray<NSString *> *encodedLines, *stoppedLines;
 static NSMutableDictionary<NSString *, NSString *> *encodedTranslations;
 static NSString *heldClip;
 static dispatch_semaphore_t clipEntered, clipRelease;
 static BOOL clipGateTimedOut;
-static void recordClip(NSURL *file, NSString *line, NSString *translation) {
+// NO, as the real writers return, when `current` says no more once the clip is under way: they ask it each frame.
+static BOOL recordClip(NSURL *file, NSString *line, NSString *translation, BOOL (^current)(void)) {
     BOOL hold;
     @synchronized (cacheRoot) {
         if (!encodedLines) encodedLines = [NSMutableArray array];
@@ -272,17 +273,23 @@ static void recordClip(NSURL *file, NSString *line, NSString *translation) {
         dispatch_semaphore_signal(clipEntered);
         clipGateTimedOut = dispatch_semaphore_wait(clipRelease, dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC)) != 0;
     }
+    if (current && !current()) {
+        @synchronized (cacheRoot) {
+            if (!stoppedLines) stoppedLines = [NSMutableArray array];
+            [stoppedLines addObject:line ?: @""];
+        }
+        return NO;
+    }
+    return YES;
 }
 BOOL SGLyricsClipWriteWithLayout(NSURL *file, CGImageRef backdrop, CGImageRef cover, NSString *previous, NSString *line,
                                  NSString *translation, NSString *next, CGSize size, SGLyricsClipStyle style,
                                  SGLyricsClipLayout layout, BOOL (^current)(void)) {
-    recordClip(file, line, translation);
-    return writeFrame(file, backdrop);
+    return recordClip(file, line, translation, current) && writeFrame(file, backdrop);
 }
 BOOL SGLyricsClipWriteOverMotion(NSURL *file, NSURL *motion, NSString *previous, NSString *line, NSString *translation,
                                  NSString *next, double from, double seconds, SGLyricsClipLayout layout, BOOL (^current)(void)) {
-    recordClip(file, line, translation);
-    return writeFrame(file, blue.CGImage);
+    return recordClip(file, line, translation, current) && writeFrame(file, blue.CGImage);
 }
 CGImageRef SGLyricsClipMotionFrame(NSURL *motion, NSString *previous, NSString *line, NSString *translation,
                                    NSString *next, double from, double seconds, SGLyricsClipLayout layout) { return CGImageRetain(blue.CGImage); }
@@ -1146,6 +1153,7 @@ void artworkChecks(void) {
     @synchronized (cacheRoot) {
         check([encodedLines isEqual:@[@"Demand", @"Wanted"]],
               @"same-track seeks drop superseded prefetches before encoding and current demand goes first");
+        check([stoppedLines containsObject:@"Held"], @"a clip whose line was seeked past stops encoding instead of finishing for nobody");
     }
     check(!clipGateTimedOut, @"held clip is released without a timeout");
 

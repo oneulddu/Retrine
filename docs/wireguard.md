@@ -132,7 +132,7 @@ design addresses caller-fd ownership and asynchronous semantics.
 
 ## Exact admission
 
-Retrine supports Spotify 9.1.90 and 9.2.0 (release base). Its install warning does not block launch.
+Retrine supports Spotify 9.1.90, 9.2.0 (release base) and 9.2.2. Its install warning does not block launch.
 WireGuard uses a separate exact-build check. Only
 `tweak/Sources/Shared/WireGuard/SGWGTargets.inc` admits WireGuard targets:
 
@@ -141,6 +141,7 @@ WireGuard uses a separate exact-build check. Only
 | 9.1.90 / 919002269 | Local static IPA scan: main `fbce22c17e1b3e0d9be866ff9291943e`, shared `2e074234cfc63f0e9255c9881824167a`. |
 | 9.1.94 / 919401928 | Fork static evidence only: main `1dfddfa139c03735b9a5fdfa475f4700`, shared `2c12ca8c48ad33f8af6569c084a6324f`. Not Retrine playback certification. |
 | 9.2.0 / 920002054 | Local static IPA/ABI scan: main `b49e75781d8635d38bb57daf68fed8a8`, shared `30bac55f8361373aad607f0535395641`. |
+| 9.2.2 / 920202587 | Local static scan: main `bedf0071845d39bbb2d096f9a8095e66`, shared `527ccb30a88f3dadb1b985336d3bcad6`; both delegate callbacks on all three owners and all five required imports present. No device routing test. |
 
 The 9.2.0 qualification repeats the 9.1.90 source inventory and binary scan.
 `SGWGTransport.m` is the only Spotify-class consumer: its three delegates each

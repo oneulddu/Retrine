@@ -84,11 +84,11 @@ static int checkInstallWarnings(void) {
             break;
         }
     }
-    for (NSString *version in @[@"9.1.90", @"9.2.0", @"9.1.78", @"9.1.88", @"1.0"]) {
+    for (NSString *version in @[@"9.1.90", @"9.2.0", @"9.2.2", @"9.1.78", @"9.1.88", @"1.0"]) {
         sg_installInfo = @{@"CFBundleShortVersionString": version, @"NSSupportsLiveActivities": @YES, @"MusicHapticsSupported": @YES};
-        BOOL supported = [version isEqual:@"9.1.90"] || [version isEqual:@"9.2.0"];
+        BOOL supported = [@[@"9.1.90", @"9.2.0", @"9.2.2"] containsObject:version];
         NSArray *expected = supported ? @[] : @[[NSString stringWithFormat:
-            SGL(@"settings.environment.supported_versions.title", @"Supported Spotify versions: %@"), @"9.1.90, 9.2.0"]];
+            SGL(@"settings.environment.supported_versions.title", @"Supported Spotify versions: %@"), @"9.1.90, 9.2.0, 9.2.2"]];
         NSArray *titles = [SGEnvironmentWarningRows() valueForKey:@"title"];
         if (![titles isEqual:expected]) {
             NSLog(@"FAIL Spotify %@: expected %@, got %@", version, expected, titles);

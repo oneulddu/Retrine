@@ -132,8 +132,8 @@ def binary_classes(ipa):
         info = plistlib.loads(transport.bounded_member(
             archive, "Payload/Spotify.app/Info.plist", transport.MAX_PLIST_BYTES))
         version = info.get("CFBundleShortVersionString")
-        if version not in ("9.1.90", "9.2.0") or info.get("CFBundleIdentifier") != "com.spotify.client":
-            raise ValueError("This audit requires the original Spotify 9.1.90 or 9.2.0 IPA")
+        if version not in ("9.1.90", "9.2.0", "9.2.2") or info.get("CFBundleIdentifier") != "com.spotify.client":
+            raise ValueError("This audit requires the original Spotify 9.1.90, 9.2.0 or 9.2.2 IPA")
         expected = transport.INSPECTED_UUIDS[version]
         if info.get("CFBundleVersion") != expected["build"]:
             raise ValueError(f"Spotify build differs from the inspected {version} IPA")

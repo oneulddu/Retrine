@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Spotify-9.1.90%20%7C%209.2.0-1ED760?style=for-the-badge&logo=spotify&logoColor=white" alt="Spotify 9.1.90 | 9.2.0">
+  <img src="https://img.shields.io/badge/Spotify-9.1.90%20%7C%209.2.0%20%7C%209.2.2-1ED760?style=for-the-badge&logo=spotify&logoColor=white" alt="Spotify 9.1.90 | 9.2.0 | 9.2.2">
   <img src="https://img.shields.io/badge/Redesign-iOS%2026%2B-000000?style=for-the-badge&logo=apple&logoColor=white" alt="Redesign: iOS 26+">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-blue?style=for-the-badge" alt="License: GPL-3.0"></a>
 </p>
@@ -118,11 +118,11 @@ on the tab bar, from the first row of the side drawer, or from the last row of S
 
 | | |
 |---|---|
-| Spotify | Decrypted IPA of **9.1.90** or **9.2.0** (release base). On other versions Retrine shows a warning, not a launch block. |
+| Spotify | Decrypted IPA of **9.1.90**, **9.2.0** (release base), or **9.2.2**. On other versions Retrine shows a warning, not a launch block. |
 | Redesign | **iOS 26+** |
 | Spotify's own look | iOS 16.1+ |
 | Live Activity | iOS 17+ |
-| WireGuard / proxy | Spotify 9.1.90 or 9.2.0; proxy routing needs iOS 17+ |
+| WireGuard / proxy | Spotify 9.1.90, 9.2.0 or 9.2.2; proxy routing needs iOS 17+ |
 
 The mod hooks Spotify's own classes, which change between releases, so any other version may build and then
 break. The redesign uses `UIGlassEffect`, which only exists from iOS 26. Below that, the Redesigned UI switch
@@ -151,7 +151,7 @@ Build the IPA instead.
 | Where to put the result | `artifacts` | `artifacts`, `filebin` or `both`. With filebin, the run summary gets a filebin.net link that is deleted after a few days of inactivity. |
 | Remove every app extension (PlugIns/) | Off | Removes every app extension from the IPA. See [Signing](#signing-and-bundle-id). |
 | Include app-local WireGuard / proxy | On | See [WireGuard](#wireguard--proxy) for routing requirements. |
-| Include Pixie native downloads | On | Requires the exact supported 9.2.0 or 9.1.90 build. |
+| Include Pixie native downloads | On | Requires the exact supported 9.2.0, 9.2.2 or 9.1.90 build. |
 | Bundle ID | `app.retrine.player` | Must match your signing App ID; extension IDs follow it. Type `com.spotify.client` to keep Spotify's ID. See [Signing](#signing-and-bundle-id). |
 
 The downloaded file is checked first, so an HTML login page or a truncated download fails right away.
@@ -238,8 +238,8 @@ Full coverage and limitations: [docs/wireguard.md](docs/wireguard.md)
 ## Pixie native downloads (experimental)
 
 IPA builds include Pixie's native download manager by default. Only the exact supported Spotify
-9.2.0 and 9.1.90 builds are accepted. To build without it, use `PIXIE=0` (`--no-pixie` with the pipeline).
-On 9.2.0, downloads, persistence across a restart and deletion were verified on a real device.
+9.2.0, 9.2.2 and 9.1.90 builds are accepted. To build without it, use `PIXIE=0` (`--no-pixie` with the pipeline).
+On 9.2.0 and 9.2.2, downloads, persistence across a restart and deletion were verified on a real device; on 9.2.2 also album downloads, offline playback and M4A/Ogg export.
 Long-term offline licence renewal remains unverified.
 See [docs/pixie.md](docs/pixie.md) for supported builds and limitations.
 

@@ -165,7 +165,12 @@ static OSStatus emptySpicyKey(CFDictionaryRef query, CFTypeRef *data) { return e
 #define SecItemDelete ignoreSpicyDelete
 #define SecItemCopyMatching emptySpicyKey
 #define kKeptTracks kSpicyKeptTracks
+static NSMutableArray *spicyLogs;
+#pragma push_macro("SGLog")
+#undef SGLog
+#define SGLog(...) [spicyLogs addObject:[NSString stringWithFormat:__VA_ARGS__]]
 #import "Shared/LyricsSources/SpicyLyrics.m"
+#pragma pop_macro("SGLog")
 #undef kKeptTracks
 #define keyQuery deezerKeyQuery
 #import "Shared/LyricsSources/Deezer.m"
@@ -483,6 +488,15 @@ static SGLyricsResult *madeUpLyrics(NSString *name, SGKaraokeTiming timing) {
 }
 
 static void checkSpicyCancellation(void) {
+    SGLyricsQuery *absent = SGLyricsQuery.new; absent.trackID = @"00000000000000000000AA";
+    spicyLogs=NSMutableArray.array;
+    absent.requestContext = SGLyricsRequestContext.new;
+    SGSpicyLyricsAskWith(@"sl_pk_fixture",absent,^(SGLyricsResult *result){ CHECK(!result); });
+    sg_spicyReply(nil,[[NSHTTPURLResponse alloc] initWithURL:[NSURL URLWithString:@"https://fixture.invalid"] statusCode:404 HTTPVersion:nil headerFields:nil]);
+    sg_spicyReply=nil; absent.requestContext=SGLyricsRequestContext.new;
+    SGSpicyLyricsAskWith(@"sl_pk_fixture",absent,^(SGLyricsResult *result){ CHECK(!result); });
+    CHECK(!sg_spicyReply && absent.requestContext.definiteMiss);
+    CHECK(spicyLogs.count && ![[spicyLogs componentsJoinedByString:@" "]containsString:absent.trackID]);spicyLogs=nil;
     SGLyricsProvider *spicy = SGLyricsProviderFor(SGSpicyLyricsKey), *other = SGLyricsProviderFor(@"musixmatch");
     SGLyricsAsk savedSpicy = spicy.ask, savedOther = other.ask;
     __block NSString *key;
@@ -3465,6 +3479,7 @@ static void checkUpNext(void) {
     sg_lastSeen = previousTrack;
 }
 
+#import "pixie-check.inc"
 int main(void) {
     @autoreleasepool {
         NSString *line = @"<p begin=\"0\" end=\"1\"><span begin=\"0\">verse</span></p>";
@@ -3506,6 +3521,8 @@ int main(void) {
         sg_testApplication.applicationState = UIApplicationStateActive;
         method_setImplementation(class_getClassMethod(UIApplication.class, @selector(sharedApplication)), (IMP)fakeApplication);
         NSUserDefaults *defaults = sg_testDefaults;
+        if (getenv("RETRINE_PIXIE_ONLY")) { checkPixieQueue(); return 0; }
+        if (getenv("RETRINE_PIXIE_COLD")) { checkColdQueue(@(getenv("RETRINE_PIXIE_COLD"))); return 0; }
         if (!aheadOnly) {
             checkLanguageStore();
             checkAskModeMigration();

@@ -310,6 +310,20 @@ static void checkProbeShapes(void) {
     }, context);
     CHECK(!context.failed && [SGKaraokeLineText(named.karaokeLines.firstObject) isEqual:@"Name fallback"]);
     fixtureISRC = nil;
+    [probeDefaults setObject:@"fixture-token" forKey:@"spotifyglass.musixmatch.token"];
+    replyStatus=429;
+    reply=^NSData *(NSURLRequest *request){return nil;};
+    context=SGLyricsRequestContext.new;
+    NSTimeInterval before=NSDate.date.timeIntervalSince1970;
+    CHECK(!probeAnswer(SGMusixmatchAsk,context));
+    CHECK(context.rateLimitUntil>=before+7 && !context.definiteMiss);
+    replyStatus=200;
+    reply=^NSData *(NSURLRequest *request){
+        return json(@{@"message":@{@"header":@{@"status_code":@200},@"body":@{@"macro_calls":@{
+            @"matcher.track.get":@{@"message":@{@"header":@{@"status_code":@404}}}}}}});
+    };
+    context=SGLyricsRequestContext.new;
+    CHECK(!probeAnswer(SGMusixmatchAsk,context) && context.definiteMiss && !context.failed);
     for (NSNumber *matcherCode in @[@400, @200]) {
         reply = ^NSData *(NSURLRequest *request) {
             if ([request.URL.path hasSuffix:@"token.get"])

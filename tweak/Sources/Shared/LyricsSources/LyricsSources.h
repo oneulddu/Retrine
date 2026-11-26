@@ -46,6 +46,9 @@ typedef void (^SGLyricsAsk)(SGLyricsQuery *query, void (^done)(SGLyricsResult *r
 @interface SGLyricsRequestContext : NSObject
 @property (atomic, readonly) BOOL failed;
 @property (atomic, readonly) BOOL cancelled;
+@property (atomic) BOOL definiteMiss, credentialRejected;
+@property (nonatomic) BOOL bulk;
+@property (atomic) NSTimeInterval rateLimitUntil;
 // Set only for a successful, genuinely empty name search, before matching or fetching lyrics.
 // The continuation must search by name only, never repeat an ID or ISRC lookup.
 @property (atomic, copy) SGLyricsAsk emptyNameSearch;
@@ -150,6 +153,13 @@ SGLyricsRequestContext *SGLyricsInvoke(SGLyricsProvider *provider, SGLyricsQuery
                     BOOL (^current)(void),
                     void (^done)(SGLyricsResult *result, BOOL failed));
 
+typedef NS_ENUM(NSInteger, SGBulkReply) {
+    SGBulkFound, SGBulkMiss, SGBulkTemporary, SGBulkRateLimited, SGBulkCredentialRejected, SGBulkFiltered
+};
+SGLyricsRequestContext *SGLyricsAskDownloaded(NSString *key, SGLyricsQuery *query,
+    void (^done)(SGBulkReply, SGLyricsResult *, NSTimeInterval retryAt));
+BOOL SGLyricsPlaybackRequestsActive(void);
+
 // Shared backoff for empty-source retries and provisional-answer recovery.
 static const NSTimeInterval SGLyricsHedgeDelaySeconds = 2;
 static const NSTimeInterval SGLyricsRequestTimeoutSeconds = 5;
@@ -157,10 +167,10 @@ static const NSTimeInterval SGLyricsWalkBudgetSeconds = 8;
 static const NSTimeInterval SGLyricsCredentialPauseSeconds = 600;
 static const NSTimeInterval SGLyricsRetryPause = 10, SGLyricsRetryPauseMost = 60;
 static const NSUInteger SGLyricsRecoveryTries = 4;
-// A write and its retirement serialize on this lease, including the actual disk commit.
+// Retirement and the store's final publication decision share only an in-memory flag.
 @interface SGLyricsLease : NSObject
+- (BOOL)isCurrent;
 - (void)invalidate;
-- (void)perform:(dispatch_block_t)work;
 @end
 void SGLyricsStoreSaveWithLease(NSString *track, NSArray<SGKaraokeLine *> *lines, NSString *credit, SGLyricsLease *lease);
 // A keeper retains this authority with its sheet, even after the selection cache is evicted.

@@ -4,11 +4,26 @@
 #import "Settings/SGPageStyle.h"
 #import "Lyrics.h"
 #import "LyricsStore.h"
+#import "PixieLyricsQueue.h"
 #import "Shared/LyricsTranslation/LyricsTranslation.h"
 #import "Core/SGGlass.h"
 #import "Shared/LocalFiles/LocalLyrics.h"
 #import "Shared/LockScreenLyrics/LockScreenLyrics.h"
 #import "Shared/LyricsSources/LyricsSources.h"
+
+@interface SGPixieStatusRow : SGModRow
+@end
+@implementation SGPixieStatusRow
+- (void)refresh:(NSNotification *)note {
+    NSDictionary *counts = SGPixieLyricsCounts();
+    self.subtitle = [NSString stringWithFormat:SGL(@"settings.lyrics.pixie.counts", @"Saved: %@ · Missing: %@ · Deferred: %@"),
+        counts[@"saved"], counts[@"missing"], counts[@"deferred"]];
+    if ([counts[@"capacity"] boolValue]) self.subtitle = [self.subtitle stringByAppendingFormat:@"\n%@", SGL(@"settings.lyrics.pixie.capacity", @"Lyrics storage is full.")];
+    if ([counts[@"failed"] boolValue]) self.subtitle = [self.subtitle stringByAppendingFormat:@"\n%@", SGL(@"settings.lyrics.pixie.unavailable", @"Could not read the download library or queue.")];
+    UIViewController *top = SGTopController();
+    if (note && [top isKindOfClass:SGModPage.class]) [((SGModPage *)top).tableView reloadData];
+}
+@end
 
 SGModSection *SGLyricsSourcesSection(BOOL namingSource) {
     SGModRow *offline = SGSwitchRow(SGL(@"settings.lyrics.offline.title", @"Keep lyrics for offline listening"),
@@ -23,7 +38,7 @@ SGModSection *SGLyricsSourcesSection(BOOL namingSource) {
         if ([top isKindOfClass:SGModPage.class]) [((SGModPage *)top).tableView reloadData];
     };
     SGLyricsStoreSize(showSize);
-    deleteSaved.action = ^{ SGLyricsStoreDeleteAll(showSize); };
+    deleteSaved.action = ^{ SGPixieLyricsDeleteSaved(showSize); };
     SGModRow *sources = SGPageRow(SGL(@"settings.lyrics.sources.row.title", @"Sources"), ^UIViewController *{ return SGLyricsSourcesPage(); });
     sources.value = ^NSString *{
         // The first one asked and how many follow it, short enough to sit beside the title.
@@ -42,6 +57,21 @@ SGModSection *SGLyricsSourcesSection(BOOL namingSource) {
         SGSwitchRow(SGL(@"settings.lyrics.all_tracks.title", @"Lyrics for every track"), SGL(@"settings.lyrics.all_tracks.subtitle", @"Even where Spotify has none"), SGKeyLyricsAllTracks), SGSpicyLyricsKeyRow(), SGDeezerARLRow(), nil];
     // Spicy Lyrics' terms ask for its credit wherever its lines show (Shared/LyricsSources/SpicyLyrics.m), so the switch
     // says so, or its credit under the lyrics reads as the switch not working (issue #20).
+    if (SGPixieLyricsAvailable() && SGLyricsEnabled()) {
+        SGModRow *bulk = SGOptionRow(SGL(@"settings.lyrics.pixie.title", @"Save lyrics for Pixie downloads"),
+            SGL(@"settings.lyrics.pixie.hint", @"Ask your enabled lyrics sources about downloaded songs. Turning this off cancels the queue, not the saved lyrics."), SGKeyPixieLyrics);
+        bulk.waitsOn = SGKeyLyricsOffline;
+        bulk.changed = offline.changed = ^(BOOL on){ SGPixieLyricsSettingsChanged(); };
+        SGModRow *pause = SGOptionRow(SGL(@"settings.lyrics.pixie.pause", @"Pause lyrics downloads"),nil,SGKeyPixieLyricsPaused);
+        pause.changed = bulk.changed;
+        SGPixieStatusRow *status = SGPixieStatusRow.new;
+        status.title = SGL(@"settings.lyrics.pixie.missing", @"Download missing lyrics");
+        status.action = ^{ SGPixieLyricsDownloadMissing(); };
+        pause.visible = status.visible = ^BOOL { return SGFlag(SGKeyPixieLyrics,NO) && SGFlag(SGKeyLyricsOffline,YES); };
+        [NSNotificationCenter.defaultCenter addObserver:status selector:@selector(refresh:) name:SGPixieLyricsProgress object:nil];
+        [status refresh:nil];
+        [rows addObjectsFromArray:@[bulk,pause,status]];
+    }
     if (namingSource) [rows addObject:SGOptionRow(SGL(@"settings.lyrics.show_source.title", @"Show source"), SGL(@"settings.lyrics.show_source.subtitle", @"Spicy Lyrics is always credited after the last line: its terms ask for it"), SGKeyLyricsCredit)];
     if (SGEeveeLyricsOn()) {
         [rows addObject:SGOptionRow(SGL(@"settings.lyrics.use_beside_eevee.title", @"Use these sources anyway"), SGL(@"settings.lyrics.use_beside_eevee.subtitle", @"Only if EeveeSpotify's lyrics are really off"), SGKeyLyricsBesideEevee)];

@@ -8,6 +8,18 @@
 #import "Shared/Lyrics/Lyrics.h"
 #import "Headers/SPTPlayer.h"
 #import "Shared/Player/PlayerState.h"
+#import "Shared/Lyrics/PixieLyricsQueue.h"
+
+#pragma mark - LyricsSettings.m's lyrics sources and Pixie lyrics queue
+
+// No source is on and no Pixie companion is loaded, so the Lyrics page shows no Pixie lyrics rows.
+BOOL SGLyricsEnabled(void) { return NO; }
+BOOL SGPixieLyricsAvailable(void) { return NO; }
+void SGPixieLyricsSettingsChanged(void) {}
+void SGPixieLyricsDownloadMissing(void) {}
+void SGPixieLyricsDeleteSaved(void (^done)(unsigned long long)) { if (done) done(0); }
+NSDictionary<NSString *, NSNumber *> *SGPixieLyricsCounts(void) { return @{}; }
+NSNotificationName const SGPixieLyricsProgress = @"SGPixieLyricsProgress";
 
 #pragma mark - SGRAccent.x, SGRRepaint.x
 
