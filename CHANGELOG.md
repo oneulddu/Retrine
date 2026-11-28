@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.0.1-beta.8](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.7...v1.0.1-beta.8) (2026-11-28)
+
+
+### Fixes
+
+* Apple Music 대기열 드래그·iPad 겹침 수정 및 최근 재생 표시 옵션 추가 ([#76](https://github.com/oneulddu/Retrine/issues/76)) ([234be40](https://github.com/oneulddu/Retrine/commit/234be4074ab6aa77255beadcbc9e9a1564960c11))
+* 닫기 드래그·재조회·Visualizer 전환 시 플레이어 배경 깜빡임과 사라짐 수정 ([9f31efd](https://github.com/oneulddu/Retrine/commit/9f31efd57eafaeea15100882482b41bc1eabc5ef))
+* 모션 아트워크 하단 거울 연장 배율을 높여 뒤집힘 윤곽 제거 ([#82](https://github.com/oneulddu/Retrine/issues/82)) ([28684b4](https://github.com/oneulddu/Retrine/commit/28684b4908fbf00769241252d8a36d351277ae2f))
+* 모션 커버 카탈로그의 다중 에디션·트랙 수 매칭 보강 ([8a8e6a4](https://github.com/oneulddu/Retrine/commit/8a8e6a46e7c51dc5b0d849fff1213276615b1c34))
+* 밝은 배경 음질 팝오버 유리·재생 바 세로 고정·음량 바 캡슐 잘림 수정 ([2d4daab](https://github.com/oneulddu/Retrine/commit/2d4daabe42e4a77569933882e2bc4a0b01c6147e))
+* 비활성·숨김 상태의 Fluid·배경 커버 전처리 보류 ([#79](https://github.com/oneulddu/Retrine/issues/79)) ([2568d9e](https://github.com/oneulddu/Retrine/commit/2568d9e69c7a82570c4342e96baa00e4695c5589))
+* 움직임 배경의 클립 없는 노래에 정지·색상·플루이드 선택 추가 ([#80](https://github.com/oneulddu/Retrine/issues/80)) ([a579193](https://github.com/oneulddu/Retrine/commit/a5791934764d46e866d0a44242c246dd9f9f4ddf))
+* 음량 바 held rail 배경 갱신과 축소 중 슬라이더 추적 보강 ([c77d23e](https://github.com/oneulddu/Retrine/commit/c77d23edff63eb2b328e6e8bd2f918539a97138f))
+* 잠금 화면 가사 글꼴 크기 상향 및 크기 선택 옵션 추가 ([4375244](https://github.com/oneulddu/Retrine/commit/437524412febcf2addaaea89ef60e1fd0125dfc5))
+* 잠금 화면 위젯 커버 유지·앱 글꼴 반영·모션 가사 인코딩 개선 ([#81](https://github.com/oneulddu/Retrine/issues/81)) ([899714d](https://github.com/oneulddu/Retrine/commit/899714d7b82b89048010fa2569f56784face1cf7))
+* 재설계 음질 상세 팝오버를 밝기 반응형 Clear Liquid Glass로 전환 ([#83](https://github.com/oneulddu/Retrine/issues/83)) ([0b0d0c0](https://github.com/oneulddu/Retrine/commit/0b0d0c08995038fe701355631549a3d954e0f12b))
+* 재설계 큐 '최근 재생' 이력 보존과 '계속 재생' 전환 모션 개선 ([6f3c439](https://github.com/oneulddu/Retrine/commit/6f3c4392a61dc1662c02220b9cd242b9bd2932b8))
+* 큐 재정렬 거절·닫기 취소 후 그립 소실과 중단 고착 수정 ([fa3e7fb](https://github.com/oneulddu/Retrine/commit/fa3e7fb20295ec3265421394180522ce9399c101))
+* 푸터 활성 디스크 초기 정렬과 Encore 아이콘 배경 갱신 중복 렌더 제거 ([bd7e4f0](https://github.com/oneulddu/Retrine/commit/bd7e4f0aa34383b7f64256cef0a03bd3bfed932d))
+* 푸터 활성 버튼의 destOut 제거 및 마스크 구멍 전환으로 검정 채움 수정 ([#83](https://github.com/oneulddu/Retrine/issues/83)) ([38e232b](https://github.com/oneulddu/Retrine/commit/38e232b26ff494449f0532c57f960bf1e5417973))
+* 플레이어 UI 잉크가 배경 색감과 밝기에 반응하도록 개선 ([#82](https://github.com/oneulddu/Retrine/issues/82)) ([a4a9eb4](https://github.com/oneulddu/Retrine/commit/a4a9eb4eceb0d2c259e3b4f49703dfb2ae22e272))
+* 플레이어 닫기 취소·알림 센터 전환 시 모션 커버 유지 ([0329e9a](https://github.com/oneulddu/Retrine/commit/0329e9a8ecd36b18abfda4b5034d04394c89ab60))
+* 플루이드 Smooth 배경의 채도 클램프와 하단 음영을 Apple Music 색감에 맞춤 ([#82](https://github.com/oneulddu/Retrine/issues/82)) ([d7cb4a5](https://github.com/oneulddu/Retrine/commit/d7cb4a5a3708c2747807ac8cc1403716a198b22d))
+
+
+### Performance
+
+* Connect Bonjour 탐색 실패에 지수 백오프 적용 ([0c084d7](https://github.com/oneulddu/Retrine/commit/0c084d72809c3519b21b2b940f2e1c617c0ea784))
+* 비활성 중 아트워크·큐·미니플레이어 갱신 보류와 가사 중복 조회 줄이기 ([4facb03](https://github.com/oneulddu/Retrine/commit/4facb03219fdd0a8a9154b34e1341894dc512c50))
+
 ## [1.0.1-beta.7](https://github.com/oneulddu/Retrine/compare/v1.0.1-beta.6...v1.0.1-beta.7) (2026-11-27)
 
 
